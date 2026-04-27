@@ -1,0 +1,53 @@
+<resources>
+    <string name="app_name">AdiMarket</string>
+    <string name="welcome">Welcome to</string>
+    <string name="your_location">Your Location</string>
+    <string name="detecting_location">Detecting location…</string>
+    <string name="location_denied">Location permission denied</string>
+    <string name="location_required">Location permission is required for this feature</string>
+    <string name="location_not_found">Could not detect location</string>
+    <string name="address_not_found">Could not get address</string>
+    <string name="address_error">Error getting address</string>
+    <string name="location_detected">Location detected</string>
+    <string name="district_prefix">Dist. </string>
+    <string name="continue_btn">Continue</string>
+    <string name="skip">Skip</string>
+    <string name="indonesia">Indonesian</string>
+    <string name="english">English</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_title">AdiMarket Dashboard</string>
+    <string name="buy_vehicle">Buy Vehicle</string>
+    <string name="sell_vehicle">Sell Vehicle</string>
+    <string name="admin_menu">Admin Approval</string>
+    <string name="back">Back</string>
+    <string name="opening_sell_menu">Opening Sell Vehicle Menu…</string>
+
+    <!-- Jual Kendaraan -->
+    <string name="complete_vehicle_data">Complete Vehicle Data</string>
+    <string name="add_photo">ADD PHOTO</string>
+    <string name="vehicle_name">Vehicle Name</string>
+    <string name="vehicle_type">Vehicle Type</string>
+    <string name="car">Car</string>
+    <string name="motorcycle">Motorcycle</string>
+    <string name="others">Others</string>
+    <string name="brand">Brand</string>
+    <string name="year">Year</string>
+    <string name="price">Price</string>
+    <string name="phone_hint">Seller Phone Number (WhatsApp)</string>
+    <string name="description">Description</string>
+    <string name="post_ad">POST AD NOW</string>
+    <string name="fill_data_toast">Please complete all data and photos!</string>
+    <string name="ad_sent_toast">✅ Ad Sent! Waiting for Admin Approval</string>
+    <string name="tts_new_ad">HELLO ADI MARKET THERE IS A NEW AD COMING IN TO NUMBER 087837566610</string>
+
+    <!-- Beli Kendaraan -->
+    <string name="select_category">Select Category</string>
+    <string name="search_hint">Search vehicle</string>
+    <string name="contact_seller">CONTACT SELLER</string>
+    <string name="marketplace_subtitle">Trusted Vehicle\nMarketplace</string>
+    <string name="ad_approved_toast">Ad Approved!</string>
+    <string name="ad_rejected_toast">Ad Rejected!</string>
+    <string name="approve">APPROVE</string>
+    <string name="reject">REJECT</string>
+</resources>

@@ -6,14 +6,29 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BeliKendaraanActivity extends AppCompatActivity {
 
     private EditText etCariKendaraan;
-    private Button btnMobil, btnMotor, btnTruk;
-    private Button btnHubungiBRV, btnHubungiPCX;
+    private Button btnMobil, btnMotor, btnLainnya;
+    private RecyclerView rvKendaraanDinamis;
+    private DynamicVehicleAdapter adapter;
+    private List<DatabaseHelper.VehicleData> allVehicles;
+    private List<DatabaseHelper.VehicleData> displayedVehicles;
+
+    private LinearLayout llCategorySelection, llContent;
+    private ImageButton btnBackToMenu;
+    private TextView tvSelectedCategory;
+    private String currentCategory = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,62 +39,122 @@ public class BeliKendaraanActivity extends AppCompatActivity {
         etCariKendaraan = findViewById(R.id.etCariKendaraan);
         btnMobil = findViewById(R.id.btnMobil);
         btnMotor = findViewById(R.id.btnMotor);
-        btnTruk = findViewById(R.id.btnTruk);
-        btnHubungiBRV = findViewById(R.id.btnHubungiBRV);
-        btnHubungiPCX = findViewById(R.id.btnHubungiPCX);
+        btnLainnya = findViewById(R.id.btnLainnya);
+        rvKendaraanDinamis = findViewById(R.id.rvKendaraanDinamis);
 
-        // Filter button listeners
-        btnMobil.setOnClickListener(new View.OnClickListener() {
+        llCategorySelection = findViewById(R.id.llCategorySelection);
+        llContent = findViewById(R.id.llContent);
+        btnBackToMenu = findViewById(R.id.btnBackToMenu);
+        tvSelectedCategory = findViewById(R.id.tvSelectedCategory);
+
+        // Setup Database dan List
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        allVehicles = dbHelper.getAllVehicles();
+        displayedVehicles = new ArrayList<>();
+
+        // Setup RecyclerView
+        adapter = new DynamicVehicleAdapter(displayedVehicles);
+        rvKendaraanDinamis.setLayoutManager(new LinearLayoutManager(this));
+        rvKendaraanDinamis.setAdapter(adapter);
+
+        // Kembalikan ke pilihan kategori semula
+        llCategorySelection.setVisibility(View.VISIBLE);
+        llContent.setVisibility(View.GONE);
+
+        // Logika Pencarian
+        etCariKendaraan.addTextChangedListener(new android.text.TextWatcher() {
             @Override
-            public void onClick(View v) {
-                Toast.makeText(BeliKendaraanActivity.this, "Filter: Mobil", Toast.LENGTH_SHORT).show();
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                filterList(s.toString());
             }
+            @Override
+            public void afterTextChanged(android.text.Editable s) {}
         });
 
-        btnMotor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(BeliKendaraanActivity.this, "Filter: Motor", Toast.LENGTH_SHORT).show();
-            }
-        });
+        // Tombol Filter MOBIL
+        btnMobil.setOnClickListener(v -> filterByType("Mobil"));
 
-        btnTruk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(BeliKendaraanActivity.this, "Filter: Truk", Toast.LENGTH_SHORT).show();
-            }
-        });
+        // Tombol Filter MOTOR
+        btnMotor.setOnClickListener(v -> filterByType("Motor"));
 
-        // Hubungi Penjual BRV
-        btnHubungiBRV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String phoneNumber = "6281234567890"; // Ganti dengan nomor penjual
-                String message = "Halo, saya tertarik dengan BRV Rp. 190.000.000";
-                openWhatsApp(phoneNumber, message);
-            }
-        });
+        // Tombol Filter LAIN-LAIN
+        btnLainnya.setOnClickListener(v -> filterByType("Lain-lain"));
 
-        // Hubungi Penjual PCX
-        btnHubungiPCX.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String phoneNumber = "6281234567890"; // Ganti dengan nomor penjual
-                String message = "Halo, saya tertarik dengan PCX Rp. 20.000.000";
-                openWhatsApp(phoneNumber, message);
-            }
+        // Tombol Kembali ke Menu Kategori
+        btnBackToMenu.setOnClickListener(v -> {
+            llContent.setVisibility(View.GONE);
+            llCategorySelection.setVisibility(View.VISIBLE);
+            currentCategory = "";
+            etCariKendaraan.setText("");
         });
     }
 
-    // Method untuk membuka WhatsApp
-    private void openWhatsApp(String phoneNumber, String message) {
-        try {
-            String url = "https://wa.me/" + phoneNumber + "?text=" + Uri.encode(message);
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse(url));
-            startActivity(intent);
-        } catch (Exception e) {
-            Toast.makeText(this, "WhatsApp tidak terinstall", Toast.LENGTH_SHORT).show();
+    private void showAllAds() {
+        currentCategory = ""; // Kosongkan kategori agar tidak memfilter
+        tvSelectedCategory.setText("SEMUA IKLAN");
+        llCategorySelection.setVisibility(View.GONE); // Sembunyikan pilihan kategori
+        llContent.setVisibility(View.VISIBLE); // Tampilkan daftar langsung
+
+        displayedVehicles.clear();
+        displayedVehicles.addAll(allVehicles);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Refresh data dari database agar iklan baru otomatis muncul
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        allVehicles = dbHelper.getAllVehicles();
+        if (!currentCategory.isEmpty()) {
+            filterByType(currentCategory);
         }
+    }
+
+    private void filterList(String query) {
+        displayedVehicles.clear();
+        for (DatabaseHelper.VehicleData v : allVehicles) {
+            // Jika kategori kosong (Semua Iklan), filter hanya berdasarkan nama
+            if (currentCategory.isEmpty()) {
+                if (v.name.toLowerCase().contains(query.toLowerCase())) {
+                    displayedVehicles.add(v);
+                }
+            } else {
+                // Jika kategori dipilih, filter berdasarkan kategori DAN nama
+                if (v.type.equalsIgnoreCase(currentCategory) && 
+                    v.name.toLowerCase().contains(query.toLowerCase())) {
+                    displayedVehicles.add(v);
+                }
+            }
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+    private void filterByType(String type) {
+        currentCategory = type;
+        
+        // Use string resource for category name in header
+        String displayType = type;
+        if (type.equalsIgnoreCase("Mobil")) {
+            displayType = getString(R.string.car);
+        } else if (type.equalsIgnoreCase("Motor")) {
+            displayType = getString(R.string.motorcycle);
+        } else if (type.equalsIgnoreCase("Lain-lain")) {
+            displayType = getString(R.string.others);
+        }
+        
+        tvSelectedCategory.setText(displayType.toUpperCase());
+        llCategorySelection.setVisibility(View.GONE);
+        llContent.setVisibility(View.VISIBLE);
+
+        displayedVehicles.clear();
+        for (DatabaseHelper.VehicleData v : allVehicles) {
+            if (v.type.equalsIgnoreCase(type)) {
+                displayedVehicles.add(v);
+            }
+        }
+        adapter.notifyDataSetChanged();
     }
 }

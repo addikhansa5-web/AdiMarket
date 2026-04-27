@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF">
+
+    <!-- Header Hijau -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#388E3C"
+        android:gravity="center_vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lengkapi Data Kendaraan"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <!-- Area Foto Kendaraan -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardUploadImage"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                android:layout_marginBottom="24dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#E0E0E0">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Klik untuk "
+                            android:textColor="#424242"
+                            android:textSize="14sp" />
+
+                        <ImageView
+                            android:id="@+id/ivPreview"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_camera"
+                            app:tint="#424242" />
+
+                        <TextView
+                            android:id="@+id/tvUploadLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" Tambah Foto"
+                            android:textColor="#424242"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Input Nama -->
+            <EditText
+                android:id="@+id/etNamaKendaraan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nama Kendaraan"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="#BDBDBD"
+                android:padding="12dp" />
+
+            <!-- Input Merek -->
+            <EditText
+                android:id="@+id/etMerek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Merek"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="#BDBDBD"
+                android:padding="12dp" />
+
+            <!-- Baris Tahun dan Harga -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
+
+                <EditText
+                    android:id="@+id/etTahun"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Tahun"
+                    android:inputType="number"
+                    android:backgroundTint="#BDBDBD"
+                    android:padding="12dp" />
+
+                <View
+                    android:layout_width="16dp"
+                    android:layout_height="1dp" />
+
+                <EditText
+                    android:id="@+id/etKilometer"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:hint="Kilometer"
+                    android:inputType="number"
+                    android:backgroundTint="#BDBDBD"
+                    android:padding="12dp" />
+            </LinearLayout>
+
+            <Spinner
+                android:id="@+id/spKondisi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp" />
+
+            <Spinner
+                android:id="@+id/spJenisKendaraan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp" />
+
+            <Button
+                android:id="@+id/btnCheckPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cek Saran Harga AI"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:id="@+id/tvPriceSuggestion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Saran Harga: -"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#388E3C"
+                android:visibility="gone"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Input Deskripsi -->
+            <EditText
+                android:id="@+id/etDeskripsi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Deskripsi"
+                android:layout_marginBottom="32dp"
+                android:backgroundTint="#BDBDBD"
+                android:padding="12dp" />
+
+            <!-- Tombol Pasang Iklan -->
+            <Button
+                android:id="@+id/btnPostAd"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="PASANG IKLAN SEKARANG"
+                android:backgroundTint="#388E3C"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                app:cornerRadius="4dp" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

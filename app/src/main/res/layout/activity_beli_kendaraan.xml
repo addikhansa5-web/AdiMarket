@@ -1,33 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5">
+    android:orientation="vertical"
+    android:background="#F5F5F5"
+    android:padding="16dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <!-- Header -->
+    <TextView
+        android:id="@+id/tvBuyVehicleHeader"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:text="@string/buy_vehicle"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#212121"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp" />
 
-        <!-- Header -->
+    <!-- Container Menu Utama (Hanya Mobil dan Motor) -->
+    <LinearLayout
+        android:id="@+id/llCategorySelection"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="visible">
+
         <TextView
+            android:id="@+id/tvSelectCategoryLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Beli Kendaraan"
-            android:textSize="24sp"
+            android:text="@string/select_category"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="#212121"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="32dp" />
+
+        <Button
+            android:id="@+id/btnMobil"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="@string/car"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:backgroundTint="#388E3C"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/btnMotor"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="@string/motorcycle"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:backgroundTint="#388E3C"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/btnLainnya"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="@string/others"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:backgroundTint="#388E3C"
+            android:textColor="#FFFFFF" />
+
+    </LinearLayout>
+
+    <!-- Container Konten (Pencarian + List) - Awalnya GONE -->
+    <LinearLayout
+        android:id="@+id/llContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
+
+            <ImageButton
+                android:id="@+id/btnBackToMenu"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@android:drawable/ic_menu_revert"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:tint="#388E3C" />
+
+            <TextView
+                android:id="@+id/tvSelectedCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kategori"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#212121"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
 
         <!-- Search Bar -->
         <EditText
             android:id="@+id/etCariKendaraan"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="Cari kendaraan"
+            android:hint="@string/search_hint"
             android:background="@drawable/search_background"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
@@ -35,152 +119,11 @@
             android:drawableStart="@android:drawable/ic_menu_search"
             android:drawablePadding="8dp" />
 
-        <!-- Filter Buttons -->
-        <LinearLayout
+        <!-- Daftar Kendaraan Dinamis -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvKendaraanDinamis"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="16dp"
-            android:gravity="center">
-
-            <Button
-                android:id="@+id/btnMobil"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:text="Mobil"
-                android:textSize="12sp"
-                android:backgroundTint="#212121"
-                android:textColor="#FFFFFF"
-                android:layout_marginEnd="8dp" />
-
-            <Button
-                android:id="@+id/btnMotor"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:text="Motor"
-                android:textSize="12sp"
-                android:backgroundTint="#212121"
-                android:textColor="#FFFFFF"
-                android:layout_marginEnd="8dp" />
-
-            <Button
-                android:id="@+id/btnTruk"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:text="Truk"
-                android:textSize="12sp"
-                android:backgroundTint="#212121"
-                android:textColor="#FFFFFF" />
-
-        </LinearLayout>
-
-        <!-- Card 1: BRV -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp"
-            app:cardBackgroundColor="#FFFFFF">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:src="@drawable/brv_car"
-                    android:scaleType="centerCrop" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="BRV"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="#212121"
-                    android:layout_marginTop="12dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Rp. 190.000.000"
-                    android:textSize="16sp"
-                    android:textColor="#4CAF50"
-                    android:textStyle="bold"
-                    android:layout_marginTop="4dp" />
-
-                <Button
-                    android:id="@+id/btnHubungiBRV"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:text="Hubungi Penjual"
-                    android:textColor="#FFFFFF"
-                    android:backgroundTint="#212121"
-                    android:layout_marginTop="12dp" />
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <!-- Card 2: PCX -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp"
-            app:cardBackgroundColor="#FFFFFF">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:src="@drawable/pcx_motor"
-                    android:scaleType="centerCrop" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="PCX"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="#212121"
-                    android:layout_marginTop="12dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Rp. 20.000.000"
-                    android:textSize="16sp"
-                    android:textColor="#4CAF50"
-                    android:textStyle="bold"
-                    android:layout_marginTop="4dp" />
-
-                <Button
-                    android:id="@+id/btnHubungiPCX"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:text="Hubungi Penjual"
-                    android:textColor="#FFFFFF"
-                    android:backgroundTint="#212121"
-                    android:layout_marginTop="12dp" />
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
+            android:layout_height="match_parent" />
     </LinearLayout>
 
-</ScrollView>
+</LinearLayout>

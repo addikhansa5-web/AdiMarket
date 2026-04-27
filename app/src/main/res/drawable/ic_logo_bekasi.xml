@@ -1,0 +1,57 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+
+    <!-- Bingkai Perisai Kuning -->
+    <path
+        android:fillColor="#FFEB3B"
+        android:pathData="M10,10 L90,10 V65 C90,85 50,95 50,95 C50,95 10,85 10,65 Z"
+        android:strokeColor="#000000"
+        android:strokeWidth="0.5"/>
+
+    <!-- Latar Hijau Atas -->
+    <path
+        android:fillColor="#388E3C"
+        android:pathData="M13,13 H87 V50 H13 Z"/>
+
+    <!-- Bagian Bata Merah -->
+    <path
+        android:fillColor="#D32F2F"
+        android:pathData="M13,50 H87 V65 H13 Z"/>
+
+    <!-- Bagian Air Biru -->
+    <path
+        android:fillColor="#1E88E5"
+        android:pathData="M13,65 H87 V75 C87,85 50,92 50,92 C50,92 13,85 13,75 Z"/>
+
+    <!-- Simbol Golok (Putih) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M48,20 Q52,20 52,45 L50,48 L48,45 Z"
+        android:strokeColor="#000000"
+        android:strokeWidth="0.5"/>
+    <path
+        android:fillColor="#000000"
+        android:pathData="M48,45 H52 V49 H48 Z"/>
+
+    <!-- Padi dan Kapas (Sederhana tapi mewakili) -->
+    <path
+        android:fillColor="#FFF176"
+        android:pathData="M70,20 Q80,35 70,50"
+        android:strokeColor="#FBC02D"
+        android:strokeWidth="2"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M30,20 Q20,35 30,50"
+        android:strokeColor="#E0E0E0"
+        android:strokeWidth="2"/>
+
+    <!-- Pita Kuning Bawah -->
+    <path
+        android:fillColor="#FFEB3B"
+        android:pathData="M20,85 L50,80 L80,85 L85,95 L50,90 L15,95 Z"
+        android:strokeColor="#000000"
+        android:strokeWidth="0.3"/>
+</vector>

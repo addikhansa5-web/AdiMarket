@@ -7,6 +7,16 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
+    <!-- Queries for WhatsApp -->
+    <queries>
+        <package android:name="com.whatsapp" />
+        <package android:name="com.whatsapp.w4b" />
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https" />
+        </intent>
+    </queries>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -47,6 +57,12 @@
             android:name=".BeliKendaraanActivity"
             android:exported="false" />
 
+        <!-- Admin Approval Activity -->
+        <activity
+            android:name=".AdminApprovalActivity"
+            android:exported="false"
+            android:label="Admin Approval" />
+
         <!-- Riwayat Transaksi Activity -->
         <activity
             android:name=".RiwayatTransaksiActivity"
@@ -56,6 +72,14 @@
         <activity
             android:name=".MainActivity"
             android:exported="false" />
+
+        <!-- AI Features Activities -->
+        <activity android:name=".ImageRecognitionActivity" android:exported="false" />
+        <activity android:name=".PricePredictionActivity" android:exported="false" />
+        <activity android:name=".ChatbotActivity" android:exported="false" />
+        <activity android:name=".OCRActivity" android:exported="false" />
+        <activity android:name=".VoiceSearchActivity" android:exported="false" />
+        <activity android:name=".SalesAnalysisActivity" android:exported="false" />
 
     </application>
 

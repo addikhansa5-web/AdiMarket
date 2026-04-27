@@ -1,3 +1,55 @@
 <resources>
     <string name="app_name">AdiMarket</string>
+    <string name="welcome">Selamat Datang di</string>
+    <string name="your_location">Lokasi Anda</string>
+    <string name="detecting_location">Mendeteksi lokasi…</string>
+    <string name="location_denied">Izin lokasi ditolak</string>
+    <string name="location_required">Izin lokasi diperlukan untuk fitur ini</string>
+    <string name="location_not_found">Tidak dapat mendeteksi lokasi</string>
+    <string name="address_not_found">Tidak dapat mendapatkan alamat</string>
+    <string name="address_error">Error mendapatkan alamat</string>
+    <string name="location_detected">Lokasi terdeteksi</string>
+    <string name="district_prefix">Kec. </string>
+    <string name="continue_btn">Lanjutkan</string>
+    <string name="skip">Lewati</string>
+    <string name="indonesia">Indonesia</string>
+    <string name="english">Inggris</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_title">Dashboard AdiMarket</string>
+    <string name="buy_vehicle">Beli Kendaraan</string>
+    <string name="sell_vehicle">Jual Kendaraan</string>
+    <string name="admin_menu">Admin Approval</string>
+    <string name="rating_menu">Analisis Penjualan</string>
+    <string name="sales_analysis_title">Grafik Penjualan AdiMarket</string>
+    <string name="back">Kembali</string>
+    <string name="opening_sell_menu">Membuka Menu Jual Kendaraan…</string>
+
+    <!-- Jual Kendaraan -->
+    <string name="complete_vehicle_data">Lengkapi Data Kendaraan</string>
+    <string name="add_photo">TAMBAH FOTO</string>
+    <string name="vehicle_name">Nama Kendaraan</string>
+    <string name="vehicle_type">Tipe Kendaraan</string>
+    <string name="car">Mobil</string>
+    <string name="motorcycle">Motor</string>
+    <string name="others">Lain-lain</string>
+    <string name="brand">Merek</string>
+    <string name="year">Tahun</string>
+    <string name="price">Harga</string>
+    <string name="phone_hint">Nomor Telepon Penjual (WhatsApp)</string>
+    <string name="description">Deskripsi</string>
+    <string name="post_ad">PASANG IKLAN SEKARANG</string>
+    <string name="fill_data_toast">Lengkapi data dan foto!</string>
+    <string name="ad_sent_toast">✅ Iklan Terkirim! Menunggu Persetujuan Admin</string>
+    <string name="tts_new_ad">HAI KAKA ADI MARKET ADA IKLAN MASUK KE NOMOR 087837566610</string>
+
+    <!-- Beli Kendaraan -->
+    <string name="select_category">Pilih Kategori</string>
+    <string name="search_hint">Cari kendaraan</string>
+    <string name="contact_seller">HUBUNGI PENJUAL</string>
+    <string name="marketplace_subtitle">Marketplace Kendaraan\nTerpercaya</string>
+    <string name="ad_approved_toast">Iklan Disetujui!</string>
+    <string name="ad_rejected_toast">Iklan Ditolak!</string>
+    <string name="approve">SETUJUI</string>
+    <string name="reject">TOLAK</string>
 </resources>

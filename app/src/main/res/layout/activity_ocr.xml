@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/ivDocument"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:scaleType="centerInside"
+        android:background="#EEEEEE" />
+
+    <Button
+        android:id="@+id/btnCapture"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ambil Foto" />
+
+    <Button
+        android:id="@+id/btnExtract"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ekstrak Teks"
+        android:enabled="false" />
+
+    <TextView
+        android:id="@+id/tvNomorPolisi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nomor Polisi: -"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvNamaPemilik"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nama Pemilik: -" />
+
+    <TextView
+        android:id="@+id/tvJenisKendaraan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Jenis Kendaraan: -" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <TextView
+            android:id="@+id/tvRawText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Raw Text..."
+            android:textSize="12sp" />
+    </ScrollView>
+
+</LinearLayout>
