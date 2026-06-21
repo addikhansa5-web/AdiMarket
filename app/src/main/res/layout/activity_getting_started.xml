@@ -1,191 +1,235 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:background="#E8F5E9">
+    android:background="#F8F9FA">
 
-    <RelativeLayout
+    <!-- Header Image with subtle dark gradient overlay -->
+    <ImageView
+        android:id="@+id/headerImage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="24dp">
+        android:layout_height="match_parent"
+        android:src="@drawable/bg_vehicle_header"
+        android:scaleType="centerCrop" />
 
-        <!-- Language Switcher -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:orientation="horizontal"
-            android:padding="8dp">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#70000000" />
 
-            <LinearLayout
-                android:id="@+id/layoutFlagId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:layout_marginEnd="12dp"
-                android:clickable="true"
-                android:focusable="true">
-                <ImageView
-                    android:id="@+id/ivFlagId"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/ic_flag_id" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/indonesia"
-                    android:textSize="10sp"
-                    android:textColor="#757575"/>
-            </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-            <LinearLayout
-                android:id="@+id/layoutFlagEn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:clickable="true"
-                android:focusable="true">
-                <ImageView
-                    android:id="@+id/ivFlagEn"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/ic_flag_en" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/english"
-                    android:textSize="10sp"
-                    android:textColor="#757575"/>
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:padding="28dp">
 
-            <!-- Logo -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_marginBottom="32dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
-                app:cardBackgroundColor="#FFCCBC">
-
-                <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_car"
-                    android:contentDescription="Car Icon" />
-
-            </androidx.cardview.widget.CardView>
-
-            <!-- Title -->
-            <TextView
-                android:id="@+id/tvWelcome"
+            <!-- Language Switcher without parent bubble container -->
+            <LinearLayout
+                android:id="@+id/layoutFlags"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/welcome"
-                android:textSize="18sp"
-                android:textColor="#757575"
-                android:layout_marginBottom="8dp" />
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:orientation="horizontal"
+                android:padding="8dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="AdiMarket"
-                android:textSize="32sp"
-                android:textStyle="bold"
-                android:textColor="#212121"
-                android:layout_marginBottom="32dp" />
-
-            <!-- Location Info Card -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="4dp"
-                app:cardBackgroundColor="#FFFFFF">
-
+                <!-- INDONESIA -->
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:id="@+id/layoutFlagId"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="20dp"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:layout_marginEnd="16dp"
+                    android:clickable="true"
+                    android:focusable="true">
 
                     <ImageView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:src="@drawable/ic_location"
-                        android:layout_marginBottom="12dp" />
+                        android:id="@+id/ivFlagId"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:layout_marginBottom="4dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_flag_id_custom" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/your_location"
-                        android:textSize="16sp"
-                        android:textColor="#757575"
-                        android:layout_marginBottom="8dp" />
-
-                    <TextView
-                        android:id="@+id/tvLocation"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/detecting_location"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:textColor="#212121"
-                        android:gravity="center" />
-
+                        android:text="@string/indonesia"
+                        android:textSize="10sp"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+                <!-- ENGLISH -->
+                <LinearLayout
+                    android:id="@+id/layoutFlagEn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:focusable="true">
 
-            <!-- Progress Bar -->
-            <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:visibility="visible" />
+                    <ImageView
+                        android:id="@+id/ivFlagEn"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:layout_marginBottom="4dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_flag_en_custom" />
 
-            <!-- Button Lanjutkan -->
-            <Button
-                android:id="@+id/btnLanjutkan"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/english"
+                        android:textSize="10sp"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutMainContent"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:text="@string/continue_btn"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="#FFFFFF"
-                android:backgroundTint="#212121"
-                android:enabled="false"
-                android:alpha="0.5" />
-
-            <!-- Button Skip -->
-            <TextView
-                android:id="@+id/tvSkip"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/skip"
-                android:textSize="14sp"
-                android:textColor="#757575"
-                android:layout_marginTop="16dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:padding="8dp" />
+                android:layout_below="@id/layoutFlags"
+                android:orientation="vertical"
+                android:layout_marginTop="50dp"
+                android:gravity="center">
 
-        </LinearLayout>
-    </RelativeLayout>
-</ScrollView>
+                <!-- Dynamic WELCOME Watermark -->
+                <TextView
+                    android:id="@+id/tvWelcomeLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="WELCOME"
+                    android:textSize="46sp"
+                    android:textStyle="bold"
+                    android:textColor="#26FFFFFF"
+                    android:letterSpacing="0.12"
+                    android:layout_marginBottom="2dp" />
+
+                <!-- Dynamic EXPLORE GARAGE Watermark -->
+                <TextView
+                    android:id="@+id/tvExploreGarage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="EXPLORE GARAGE"
+                    android:textSize="13sp"
+                    android:textColor="#55FFFFFF"
+                    android:letterSpacing="0.1"
+                    android:layout_marginBottom="50dp" />
+
+                <!-- Title -->
+                <TextView
+                    android:id="@+id/tvWelcome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/welcome"
+                    android:textSize="18sp"
+                    android:textColor="#CCFFFFFF"
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="AdiMarket"
+                    android:textSize="38sp"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF"
+                    android:letterSpacing="0.05"
+                    android:layout_marginBottom="36dp" />
+
+                <!-- Location Info Glass Card -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="32dp"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="#25FFFFFF">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="24dp"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
+                            android:src="@drawable/ic_location"
+                            android:layout_marginBottom="12dp"
+                            app:tint="#A5D6A7" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/your_location"
+                            android:textSize="14sp"
+                            android:textColor="#B0ECEFF1"
+                            android:layout_marginBottom="6dp" />
+
+                        <TextView
+                            android:id="@+id/tvLocation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/detecting_location"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="#FFFFFF"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <!-- Progress Bar -->
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginBottom="24dp"
+                    android:indeterminateTint="#A5D6A7"
+                    android:visibility="visible" />
+
+                <!-- Button Lanjutkan (Premium Gradient Green) -->
+                <Button
+                    android:id="@+id/btnLanjutkan"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:text="@string/continue_btn"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF"
+                    android:backgroundTint="#2E7D32"
+                    app:cornerRadius="28dp"
+                    android:elevation="6dp"
+                    android:enabled="true"
+                    android:alpha="1.0" />
+
+                <!-- Button Skip (Clean Text Link) -->
+                <TextView
+                    android:id="@+id/tvSkip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/skip"
+                    android:textSize="14sp"
+                    android:textColor="#B0ECEFF1"
+                    android:layout_marginTop="20dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="8dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

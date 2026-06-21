@@ -5,23 +5,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.ai.client.generativeai.GenerativeModel;
-import com.google.ai.client.generativeai.java.GenerativeModelFutures;
-import com.google.ai.client.generativeai.type.Content;
-import com.google.ai.client.generativeai.type.GenerateContentResponse;
-import com.google.common.util.concurrent.FutureCallback;
-import com.google.common.util.concurrent.Futures;
-import com.google.common.util.concurrent.ListenableFuture;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 public class ChatbotActivity extends AppCompatActivity {
 
@@ -32,19 +20,16 @@ public class ChatbotActivity extends AppCompatActivity {
     private ChatAdapter chatAdapter;
     private List<ChatMessage> messageList;
 
-    // Masukkan API Key Gemini Anda di sini
-    private static final String GEMINI_API_KEY = "MASUKKAN_API_KEY_ANDA_DI_SINI"; 
-
-    private GenerativeModelFutures model;
+    private GroqHelper groqHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatbot);
+        WallpaperHelper.apply(this, findViewById(R.id.headerImage));
 
-        // Inisialisasi Model Gemini
-        GenerativeModel gm = new GenerativeModel("gemini-1.5-flash", GEMINI_API_KEY);
-        model = GenerativeModelFutures.from(gm);
+        // Inisialisasi GroqHelper dengan Context
+        groqHelper = new GroqHelper(this);
 
         // Initialize views
         rvChat = findViewById(R.id.rvChat);
@@ -58,7 +43,18 @@ public class ChatbotActivity extends AppCompatActivity {
         rvChat.setAdapter(chatAdapter);
 
         // Add welcome message
-        addMessage("Bot", "Halo! Saya Asisten AI AdiMarket (Gemini). Ada yang bisa saya bantu tentang kendaraan?", false);
+        addMessage("Bot",
+            "Halo! Saya Asisten AI AdiMarket 🤖\n\n" +
+            "Saya bisa membantu Anda:\n" +
+            "🔍 Cari kendaraan sesuai budget & selera\n" +
+            "📋 Panduan cara jual kendaraan\n" +
+            "📊 Info stok kendaraan terkini\n" +
+            "💰 Cek harga termurah & tertinggi\n\n" +
+            "Coba tanyakan:\n" +
+            "• \"Cari motor matik budget 20 juta\"\n" +
+            "• \"Ada mobil Toyota di bawah 150 juta?\"\n" +
+            "• \"Berapa stok kendaraan sekarang?\"",
+            false);
 
         // Send button
         btnSend.setOnClickListener(new View.OnClickListener() {
@@ -80,8 +76,8 @@ public class ChatbotActivity extends AppCompatActivity {
         addMessage("Anda", userMessage, true);
         etMessage.setText("");
 
-        // Get bot response from Gemini
-        getGeminiResponse(userMessage);
+        // Get bot response from Groq
+        getGroqResponse(userMessage);
     }
 
     private void addMessage(String sender, String message, boolean isUser) {
@@ -90,14 +86,9 @@ public class ChatbotActivity extends AppCompatActivity {
         rvChat.scrollToPosition(messageList.size() - 1);
     }
 
-    private void getGeminiResponse(String userMessage) {
-        // Gunakan GeminiHelper yang sudah kita optimalkan di Phase 14
-        GeminiHelper geminiHelper = new GeminiHelper();
-        
-        String prompt = "Anda adalah asisten AI untuk AdiMarket, sebuah marketplace jual beli kendaraan. " +
-                "Jawab pertanyaan berikut dengan ramah dan informatif: " + userMessage;
-
-        geminiHelper.askGemini(prompt, new GeminiHelper.GeminiCallback() {
+    private void getGroqResponse(String userMessage) {
+        // AI Hybrid: GroqHelper sekarang otomatis mengambil konteks database sendiri
+        groqHelper.askGroq(messageList, new GroqHelper.GroqCallback() {
             @Override
             public void onSuccess(String response) {
                 runOnUiThread(() -> addMessage("Bot", response, false));
@@ -105,8 +96,8 @@ public class ChatbotActivity extends AppCompatActivity {
 
             @Override
             public void onError(String error) {
-                Log.e("GeminiAI", "Error: " + error);
-                runOnUiThread(() -> addMessage("Bot", "Koneksi AI terputus. Pastikan API Key sudah benar di GeminiHelper.java", false));
+                Log.e("GroqAI", "Error: " + error);
+                runOnUiThread(() -> addMessage("Bot", "Maaf, AI sedang beristirahat. Pastikan koneksi internet stabil.", false));
             }
         });
     }

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#0D1B0F">
+
+    <!-- Header -->
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:gravity="center_vertical"
+        android:padding="16dp" android:background="#1B5E20">
+        <ImageButton android:id="@+id/btnBackProfil"
+            android:layout_width="40dp" android:layout_height="40dp"
+            android:src="@android:drawable/ic_media_previous"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:tint="#FFFFFF" />
+        <TextView android:layout_width="0dp" android:layout_weight="1"
+            android:layout_height="wrap_content" android:text="👤 Profil Saya"
+            android:textColor="#FFFFFF" android:textSize="18sp" android:textStyle="bold"
+            android:layout_marginStart="8dp" />
+    </LinearLayout>
+
+    <ScrollView android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Avatar section -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical" android:gravity="center"
+                android:background="#1A2E1C" android:padding="28dp">
+
+                <TextView android:id="@+id/tvAvatar"
+                    android:layout_width="80dp" android:layout_height="80dp"
+                    android:text="A"
+                    android:textSize="36sp" android:textStyle="bold" android:textColor="#FFFFFF"
+                    android:gravity="center" android:background="@drawable/avatar_bg" />
+
+                <TextView android:id="@+id/tvProfileUsername"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="@username" android:textColor="#A5D6A7"
+                    android:textSize="15sp" android:textStyle="bold"
+                    android:layout_marginTop="10dp" />
+
+                <TextView android:id="@+id/tvJoinDate"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Bergabung sejak ..." android:textColor="#777"
+                    android:textSize="12sp" android:layout_marginTop="4dp" />
+            </LinearLayout>
+
+            <!-- Edit Profil -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical" android:padding="20dp">
+
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="✏️ Edit Profil" android:textColor="#FFFFFF"
+                    android:textSize="15sp" android:textStyle="bold"
+                    android:layout_marginBottom="16dp" />
+
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Nama Lengkap" android:textColor="#A5D6A7"
+                    android:textSize="12sp" android:textStyle="bold" android:layout_marginBottom="4dp" />
+                <EditText android:id="@+id/etEditNama"
+                    android:layout_width="match_parent" android:layout_height="52dp"
+                    android:inputType="textPersonName" android:background="@drawable/input_bg"
+                    android:textColor="#FFFFFF" android:textColorHint="#666"
+                    android:paddingStart="16dp" android:paddingEnd="16dp"
+                    android:layout_marginBottom="12dp" />
+
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Nomor HP / WhatsApp" android:textColor="#A5D6A7"
+                    android:textSize="12sp" android:textStyle="bold" android:layout_marginBottom="4dp" />
+                <EditText android:id="@+id/etEditPhone"
+                    android:layout_width="match_parent" android:layout_height="52dp"
+                    android:inputType="phone" android:background="@drawable/input_bg"
+                    android:textColor="#FFFFFF" android:textColorHint="#666"
+                    android:paddingStart="16dp" android:paddingEnd="16dp"
+                    android:layout_marginBottom="20dp" />
+
+                <Button android:id="@+id/btnSimpanProfil"
+                    android:layout_width="match_parent" android:layout_height="52dp"
+                    android:text="💾 Simpan Perubahan" android:textColor="#FFFFFF"
+                    android:textStyle="bold" android:textSize="14sp"
+                    android:backgroundTint="#2E7D32" android:layout_marginBottom="12dp" />
+
+                <Button android:id="@+id/btnKotakPenawaran"
+                    android:layout_width="match_parent" android:layout_height="52dp"
+                    android:text="🏷️ Kotak Penawaran" android:textColor="#FFFFFF"
+                    android:textStyle="bold" android:textSize="14sp"
+                    android:backgroundTint="#1976D2" android:layout_marginBottom="12dp" />
+
+                <!-- Separator -->
+                <View android:layout_width="match_parent" android:layout_height="1dp"
+                    android:background="#1A2E1C" android:layout_marginVertical="8dp" />
+
+                <Button android:id="@+id/btnLogout"
+                    android:layout_width="match_parent" android:layout_height="52dp"
+                    android:text="🚪 Keluar / Logout" android:textColor="#FFFFFF"
+                    android:textStyle="bold" android:textSize="14sp"
+                    android:backgroundTint="#B71C1C" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -14,8 +14,8 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 public class GeminiHelper {
-    // Masukkan API Key Anda di sini jika ingin menggunakan AI asli
-    private static final String API_KEY = "MASUKKAN_API_KEY_ANDA_DI_SINI"; 
+    // Menggunakan API Key dari local.properties via BuildConfig
+    private static final String API_KEY = BuildConfig.GEMINI_API_KEY; 
     private final GenerativeModelFutures model;
     private final Executor executor;
     

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Kartu penawaran TERKIRIM — tampilan pembeli + balasan penjual -->
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="3dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="14dp">
+
+        <!-- Nama kendaraan + tanggal -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvTerkirimVehicle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="🚗 Toyota Avanza 2021"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:textColor="#1B5E20" />
+
+            <TextView
+                android:id="@+id/tvTerkirimDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="01 Jan 2025"
+                android:textSize="11sp"
+                android:textColor="#888888" />
+        </LinearLayout>
+
+        <!-- Harga tawaran saya -->
+        <TextView
+            android:id="@+id/tvTerkirimPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="💰 Tawaran saya: Rp 170 Jt"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="#E65100"
+            android:layout_marginTop="6dp" />
+
+        <!-- Pesan saya -->
+        <TextView
+            android:id="@+id/tvTerkirimMsg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="13sp"
+            android:textColor="#555555"
+            android:layout_marginTop="4dp" />
+
+        <!-- Status badge -->
+        <TextView
+            android:id="@+id/tvTerkirimStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⏳ Menunggu Balasan"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp" />
+
+        <!-- BOX BALASAN PENJUAL -->
+        <LinearLayout
+            android:id="@+id/layoutSellerReply"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#E8F5E9"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tvSellerReplyBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="📨 Balasan Penjual:"
+                android:textSize="13sp"
+                android:textColor="#1B5E20"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

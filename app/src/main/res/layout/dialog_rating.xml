@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#1A2E1C"
+    android:padding="20dp">
+
+    <!-- Header -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="⭐ Beri Rating Penjual"
+        android:textColor="#FFFFFF"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="4dp" />
+
+    <TextView
+        android:id="@+id/tvRatingVehicleName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kendaraan: -"
+        android:textColor="#A5D6A7"
+        android:textSize="12sp"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Bintang Interaktif -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pilih Rating:"
+        android:textColor="#A5D6A7"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <LinearLayout
+        android:id="@+id/starContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="6dp">
+
+        <TextView android:id="@+id/star1" android:layout_width="40dp" android:layout_height="40dp"
+            android:text="☆" android:textSize="32sp" android:gravity="center" android:textColor="#FFD600" />
+        <TextView android:id="@+id/star2" android:layout_width="40dp" android:layout_height="40dp"
+            android:text="☆" android:textSize="32sp" android:gravity="center" android:textColor="#FFD600" />
+        <TextView android:id="@+id/star3" android:layout_width="40dp" android:layout_height="40dp"
+            android:text="☆" android:textSize="32sp" android:gravity="center" android:textColor="#FFD600" />
+        <TextView android:id="@+id/star4" android:layout_width="40dp" android:layout_height="40dp"
+            android:text="☆" android:textSize="32sp" android:gravity="center" android:textColor="#FFD600" />
+        <TextView android:id="@+id/star5" android:layout_width="40dp" android:layout_height="40dp"
+            android:text="☆" android:textSize="32sp" android:gravity="center" android:textColor="#FFD600" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvRatingLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ketuk bintang untuk memberi nilai"
+        android:textColor="#888"
+        android:textSize="12sp"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Komentar -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Komentar (opsional):"
+        android:textColor="#A5D6A7"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="6dp" />
+
+    <EditText
+        android:id="@+id/etRatingComment"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:hint="Ceritakan pengalaman Anda..."
+        android:textColor="#FFFFFF"
+        android:textColorHint="#666"
+        android:textSize="13sp"
+        android:background="@drawable/input_bg"
+        android:padding="10dp"
+        android:gravity="top"
+        android:inputType="textMultiLine"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Tombol -->
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:gravity="end">
+
+        <Button
+            android:id="@+id/btnBatalRating"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Batal"
+            android:textSize="13sp"
+            android:textColor="#A5D6A7"
+            android:backgroundTint="#2E4D30"
+            android:layout_marginEnd="8dp" />
+
+        <Button
+            android:id="@+id/btnKirimRating"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="⭐ Kirim Rating"
+            android:textSize="13sp"
+            android:textColor="#000000"
+            android:backgroundTint="#FFD600" />
+    </LinearLayout>
+
+</LinearLayout>

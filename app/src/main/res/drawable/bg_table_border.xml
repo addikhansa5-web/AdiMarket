@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Menggunakan warna orange pastel/peach sesuai referensi Wireframe -->
+    <stroke android:width="1dp" android:color="#E4855D" />
+    <solid android:color="#05E4855D" /> <!-- Sedikit transparansi orange -->
+</shape>

@@ -1,31 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E8F5E9">
+    android:background="#212121">
+
+    <!-- Fullscreen Header Image for Splash -->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/bg_vehicle_header"
+        android:scaleType="centerCrop" />
+
+    <!-- Dark Overlay so text is legible -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#99000000" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Card untuk Icon -->
+        <!-- Card untuk Icon Lingkaran Hitam Sempurna -->
         <androidx.cardview.widget.CardView
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:layout_marginBottom="24dp"
-            android:elevation="4dp"
-            app:cardCornerRadius="16dp"
-            app:cardBackgroundColor="#FFCCBC"
-            xmlns:app="http://schemas.android.com/apk/res-auto">
+            app:cardCornerRadius="80dp"
+            app:cardBackgroundColor="#000000"
+            app:cardElevation="8dp">
 
             <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_car"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_car_premium"
+                android:scaleType="centerCrop"
                 android:contentDescription="Car Icon" />
 
         </androidx.cardview.widget.CardView>
@@ -35,9 +51,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="AdiMarket"
-            android:textSize="24sp"
+            android:textSize="32sp"
             android:textStyle="bold"
-            android:textColor="#212121"
+            android:textColor="#FFFFFF"
             android:layout_marginBottom="8dp" />
 
         <!-- Subtitle -->
@@ -45,11 +61,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/marketplace_subtitle"
-            android:textSize="14sp"
-            android:textColor="#757575"
+            android:textSize="16sp"
+            android:textColor="#E0E0E0"
             android:gravity="center"
             android:lineSpacingExtra="2dp" />
 
     </LinearLayout>
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

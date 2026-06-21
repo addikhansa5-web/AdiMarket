@@ -12,8 +12,13 @@
     <string name="district_prefix">Dist. </string>
     <string name="continue_btn">Continue</string>
     <string name="skip">Skip</string>
-    <string name="indonesia">Indonesian</string>
-    <string name="english">English</string>
+    <string name="indonesia">IND</string>
+    <string name="english">ENG</string>
+
+    <!-- Greetings -->
+    <string name="greeting_loyal">Welcome back, loyal buyer! 🌟</string>
+    <string name="greeting_returning">Long time no see! There are new vehicles for you 🚗</string>
+    <string name="greeting_default">Hello! Ready to find your dream vehicle? 😊</string>
 
     <!-- Dashboard -->
     <string name="dashboard_title">AdiMarket Dashboard</string>
@@ -22,6 +27,11 @@
     <string name="admin_menu">Admin Approval</string>
     <string name="back">Back</string>
     <string name="opening_sell_menu">Opening Sell Vehicle Menu…</string>
+
+    <!-- Metadata -->
+
+    <string name="chatbot_menu">Ask AI (Chatbot)</string>
+    <string name="rating_menu">Sales Analysis</string>
 
     <!-- Jual Kendaraan -->
     <string name="complete_vehicle_data">Complete Vehicle Data</string>

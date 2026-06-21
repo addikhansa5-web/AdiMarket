@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/containerNotif"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:padding="14dp"
+    android:layout_marginHorizontal="12dp"
+    android:layout_marginTop="6dp"
+    android:background="#FAFAFA"
+    android:elevation="2dp">
+
+    <!-- Ikon tipe -->
+    <TextView
+        android:id="@+id/tvNotifIcon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:text="🔔"
+        android:textSize="22sp"
+        android:gravity="center" />
+
+    <!-- Konten -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="10dp">
+
+        <TextView
+            android:id="@+id/tvNotifTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Judul notifikasi"
+            android:textColor="#212121"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvNotifMsg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="Pesan notifikasi..."
+            android:textColor="#616161"
+            android:textSize="12sp"
+            android:maxLines="2"
+            android:ellipsize="end" />
+
+        <TextView
+            android:id="@+id/tvNotifTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Baru saja"
+            android:textColor="#9E9E9E"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+    <!-- Dot unread -->
+    <View
+        android:id="@+id/tvUnreadDot"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:background="@drawable/badge_red"
+        android:layout_marginStart="8dp"
+        android:visibility="invisible" />
+
+</LinearLayout>

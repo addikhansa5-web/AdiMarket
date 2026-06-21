@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0D1B2A">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:paddingBottom="32dp">
+
+        <!-- Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="20dp"
+            android:background="#1A2940">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🛡️ Verifikasi Penjual"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvStep"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Langkah 1 dari 2"
+                android:textColor="#90CAF9"
+                android:textSize="13sp"
+                android:layout_marginTop="4dp" />
+        </LinearLayout>
+
+        <!-- Camera Preview (CameraX PreviewView) -->
+        <FrameLayout
+            android:id="@+id/frameCamera"
+            android:layout_width="260dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="20dp"
+            android:background="#111111"
+            android:visibility="gone">
+
+            <!-- CameraX PreviewView -->
+            <androidx.camera.view.PreviewView
+                android:id="@+id/previewView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <!-- Oval face guide overlay -->
+            <View
+                android:layout_width="180dp"
+                android:layout_height="220dp"
+                android:layout_gravity="center"
+                android:background="@drawable/face_oval_guide" />
+
+            <!-- Scan animation text -->
+            <TextView
+                android:id="@+id/tvScanLine"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:text="🔍 Mendeteksi wajah..."
+                android:textColor="#42A5F5"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:padding="8dp"
+                android:background="#AA000000"
+                android:visibility="gone" />
+        </FrameLayout>
+
+        <!-- Status Icon (success) -->
+        <TextView
+            android:id="@+id/tvStatusIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🔐"
+            android:textSize="56sp"
+            android:layout_marginTop="20dp"
+            android:visibility="visible" />
+
+        <!-- Progress Bar -->
+        <ProgressBar
+            android:id="@+id/progressVerify"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="260dp"
+            android:layout_height="6dp"
+            android:layout_marginTop="12dp"
+            android:indeterminate="true"
+            android:progressTint="#42A5F5"
+            android:visibility="gone" />
+
+        <!-- Status Title -->
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="🔐 Verifikasi Identitas"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="center" />
+
+        <!-- Instruction -->
+        <TextView
+            android:id="@+id/tvInstruction"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Gunakan Face Unlock atau Sidik Jari Anda untuk membuktikan bahwa Anda adalah pemilik perangkat ini."
+            android:textColor="#B0BEC5"
+            android:textSize="13sp"
+            android:gravity="center"
+            android:lineSpacingExtra="4dp" />
+
+        <!-- Tombol Biometrik -->
+        <Button
+            android:id="@+id/btnBiometric"
+            android:layout_width="260dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="24dp"
+            android:text="🔐  Verifikasi Biometrik"
+            android:backgroundTint="#1565C0"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:visibility="visible" />
+
+        <!-- Tombol Ambil Foto -->
+        <Button
+            android:id="@+id/btnCapture"
+            android:layout_width="260dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="16dp"
+            android:text="📸  Ambil Foto Wajah"
+            android:backgroundTint="#1B5E20"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <!-- Tombol Retry -->
+        <Button
+            android:id="@+id/btnRetry"
+            android:layout_width="260dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="10dp"
+            android:text="🔄  Coba Lagi"
+            android:backgroundTint="#37474F"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            android:visibility="gone" />
+
+        <!-- Info privasi -->
+        <LinearLayout
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#1A2940"
+            android:padding="14dp"
+            android:layout_marginTop="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🔒 Data Anda Aman"
+                android:textColor="#90CAF9"
+                android:textStyle="bold"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="• Biometrik diproses di perangkat Anda\n• Scan wajah hanya verifikasi lokal\n• Data tidak dikirim ke server eksternal"
+                android:textColor="#78909C"
+                android:textSize="11sp"
+                android:lineSpacingExtra="3dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

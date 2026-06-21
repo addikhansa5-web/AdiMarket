@@ -6,32 +6,48 @@
     android:orientation="vertical"
     android:background="#FFFFFF">
 
-    <!-- Header Hijau Solid -->
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="#388E3C"
-        android:gravity="center_vertical"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp">
+        android:layout_height="180dp">
 
         <ImageView
-            android:id="@+id/ivLogoDaerahDinamis"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="12dp"
-            android:visibility="gone"
-            android:scaleType="fitCenter" />
+            android:id="@+id/headerImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bg_vehicle_header" />
 
-        <TextView
-            android:id="@+id/tvCompleteData"
-            android:layout_width="wrap_content"
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_image_overlay" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/complete_vehicle_data"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+            android:orientation="horizontal"
+            android:padding="24dp"
+            android:gravity="center_vertical"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageView
+                android:id="@+id/ivLogoDaerahDinamis"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="12dp"
+                android:visibility="gone"
+                android:scaleType="fitCenter" />
+
+            <TextView
+                android:id="@+id/tvCompleteData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/complete_vehicle_data"
+                android:textColor="#FFFFFF"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -51,7 +67,10 @@
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp"
-                android:layout_marginBottom="20dp">
+                android:layout_marginBottom="20dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -84,14 +103,14 @@
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:src="@drawable/ic_camera"
-                            app:tint="#388E3C" />
+                            app:tint="@color/primary_green" />
 
                         <TextView
                             android:id="@+id/tvAddPhoto"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/add_photo"
-                            android:textColor="#388E3C"
+                            android:textColor="@color/primary_green"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             android:layout_marginStart="8dp"/>
@@ -191,6 +210,18 @@
                     android:textSize="14sp"/>
             </LinearLayout>
 
+            <!-- AI Price Advisor Button -->
+            <Button
+                android:id="@+id/btnAIPriceAdvisor"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginBottom="16dp"
+                android:text="💡 Sarankan Harga dengan AI"
+                android:backgroundTint="#FF6F00"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
             <EditText
                 android:id="@+id/etNoTelpon"
                 android:layout_width="match_parent"
@@ -201,6 +232,24 @@
                 android:inputType="phone"
                 android:background="@android:drawable/edit_text"
                 android:textSize="14sp"/>
+
+            <!-- Kota / Lokasi -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="📍 Kota / Lokasi"
+                android:textStyle="bold"
+                android:textColor="#333333"
+                android:textSize="14sp"
+                android:layout_marginBottom="6dp"/>
+
+            <Spinner
+                android:id="@+id/spinnerKota"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="16dp"
+                android:background="@android:drawable/edit_text"
+                android:padding="8dp" />
 
             <EditText
                 android:id="@+id/etDeskripsi"
@@ -218,7 +267,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:text="@string/post_ad"
-                android:backgroundTint="#388E3C"
+                android:backgroundTint="@color/primary_green"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
                 android:textSize="14sp"

@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AdiMarket — Marketplace Kendaraan AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #1B5E20; --green2: #2E7D32; --green3: #43A047;
+    --accent: #00E676; --blue: #1565C0; --red: #F44336;
+    --gold: #FFD600; --dark: #0D1B0F; --card: #1A2E1C;
+    --text: #E8F5E9; --sub: #A5D6A7; --border: #2E4D30;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Inter',sans-serif; background:#0a0a0a; color:var(--text); min-height:100vh; overflow-x:hidden; }
+
+  /* ── HERO ── */
+  .hero { background:linear-gradient(135deg,#0D1B0F 0%,#1B3320 50%,#0a1a0c 100%); padding:60px 20px 40px; text-align:center; position:relative; overflow:hidden; }
+  .hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 80% 60% at 50% 0%, #00E67615 0%, transparent 70%); }
+  .hero-badge { display:inline-flex; align-items:center; gap:8px; background:#00E67620; border:1px solid #00E67640; border-radius:50px; padding:6px 16px; font-size:12px; color:var(--accent); margin-bottom:20px; letter-spacing:1px; }
+  .hero h1 { font-size:clamp(2rem,5vw,3.5rem); font-weight:900; background:linear-gradient(135deg,#fff 30%,var(--accent)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; line-height:1.1; }
+  .hero p { color:var(--sub); font-size:1.1rem; margin:16px auto; max-width:500px; }
+  .hero-btns { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:28px; }
+  .btn-primary { background:linear-gradient(135deg,var(--green2),var(--green3)); color:#fff; border:none; padding:14px 28px; border-radius:12px; font-size:15px; font-weight:700; cursor:pointer; transition:.3s; }
+  .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 24px #2E7D3260; }
+  .btn-ghost { background:transparent; color:var(--accent); border:2px solid var(--accent); padding:12px 28px; border-radius:12px; font-size:15px; font-weight:600; cursor:pointer; transition:.3s; }
+  .btn-ghost:hover { background:var(--accent); color:#000; }
+
+  /* ── PHONE MOCKUP ── */
+  .phone-section { display:flex; justify-content:center; align-items:flex-start; gap:32px; padding:60px 20px; flex-wrap:wrap; }
+  .phone { width:320px; background:#111; border-radius:48px; border:3px solid #333; box-shadow:0 40px 80px #000a,0 0 0 1px #222; overflow:hidden; position:relative; flex-shrink:0; }
+  .phone-notch { width:120px; height:28px; background:#111; border-radius:0 0 20px 20px; margin:0 auto; }
+  .phone-screen { background:#0D1B0F; height:620px; overflow:hidden; position:relative; }
+  .screen-page { position:absolute; inset:0; transition:all .4s cubic-bezier(.4,0,.2,1); opacity:0; transform:translateX(100%); overflow-y:auto; }
+  .screen-page.active { opacity:1; transform:translateX(0); }
+  .screen-page.prev { opacity:0; transform:translateX(-100%); }
+
+  /* ── STATUS BAR ── */
+  .status-bar { display:flex; justify-content:space-between; align-items:center; padding:8px 16px; font-size:11px; color:#aaa; background:#0D1B0F; }
+
+  /* ── DASHBOARD SCREEN ── */
+  .dash-header { background:linear-gradient(180deg,#1B5E20,#0D1B0F); padding:16px; position:relative; }
+  .dash-header::before { content:''; position:absolute; inset:0; background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200"><circle cx="280" cy="20" r="80" fill="%2300E67608"/><circle cx="40" cy="160" r="60" fill="%2300E67608"/></svg>'); }
+  .dash-header-row { display:flex; align-items:center; justify-content:space-between; position:relative; }
+  .dash-greeting { font-size:11px; color:#A5D6A7; }
+  .dash-title { font-size:22px; font-weight:900; color:#fff; margin-top:2px; }
+  .header-icons { display:flex; gap:8px; }
+  .header-btn { width:34px; height:34px; border-radius:50%; background:#ffffff15; border:none; color:#fff; display:flex; align-items:center; justify-content:center; font-size:14px; cursor:pointer; position:relative; }
+  .badge { position:absolute; top:-3px; right:-3px; width:16px; height:16px; background:var(--red); border-radius:50%; font-size:9px; font-weight:700; color:#fff; display:flex; align-items:center; justify-content:center; border:1.5px solid #0D1B0F; }
+
+  .stats-row { display:flex; gap:8px; padding:12px 16px 0; }
+  .stat-card { flex:1; background:#1A2E1C; border-radius:12px; padding:10px; text-align:center; border:1px solid #2E4D30; }
+  .stat-num { font-size:20px; font-weight:800; color:var(--accent); }
+  .stat-label { font-size:9px; color:#A5D6A7; margin-top:2px; }
+
+  .menu-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:12px 16px; }
+  .menu-card { background:linear-gradient(135deg,#1A2E1C,#162418); border:1px solid var(--border); border-radius:16px; padding:16px 12px; cursor:pointer; transition:.2s; text-align:left; }
+  .menu-card:hover { background:#243C26; transform:translateY(-2px); }
+  .menu-icon { font-size:24px; margin-bottom:8px; display:block; }
+  .menu-name { font-size:12px; font-weight:700; color:#fff; }
+  .menu-sub { font-size:10px; color:var(--sub); margin-top:2px; }
+  .menu-ai-badge { background:#FFD60020; border:1px solid #FFD60040; border-radius:6px; padding:2px 6px; font-size:8px; color:var(--gold); display:inline-block; margin-top:4px; }
+
+  /* ── BELI SCREEN ── */
+  .screen-header { display:flex; align-items:center; gap:10px; padding:12px 16px; background:#162418; border-bottom:1px solid var(--border); }
+  .back-btn { font-size:18px; cursor:pointer; }
+  .screen-title { font-size:16px; font-weight:700; flex:1; }
+
+  .search-bar { margin:12px 16px; background:#1A2E1C; border:1px solid var(--border); border-radius:12px; display:flex; align-items:center; padding:10px 14px; gap:8px; }
+  .search-bar input { background:none; border:none; color:#fff; font-size:13px; flex:1; outline:none; font-family:inherit; }
+  .search-bar input::placeholder { color:#666; }
+
+  .filter-chips { display:flex; gap:8px; padding:0 16px 12px; overflow-x:auto; }
+  .chip { background:#1A2E1C; border:1px solid var(--border); border-radius:20px; padding:5px 12px; font-size:11px; color:var(--sub); white-space:nowrap; cursor:pointer; }
+  .chip.active { background:var(--green2); border-color:var(--green2); color:#fff; }
+
+  .vehicle-card { margin:0 16px 12px; background:linear-gradient(135deg,#1A2E1C,#162418); border:1px solid var(--border); border-radius:16px; overflow:hidden; cursor:pointer; }
+  .vehicle-img { width:100%; height:130px; object-fit:cover; background:linear-gradient(135deg,#1a3a1a,#0d1b0d); display:flex; align-items:center; justify-content:center; font-size:48px; }
+  .vehicle-body { padding:10px 12px; }
+  .vehicle-top { display:flex; justify-content:space-between; align-items:flex-start; }
+  .vehicle-name { font-size:13px; font-weight:700; }
+  .vehicle-year { font-size:11px; color:var(--sub); }
+  .vehicle-price { font-size:15px; font-weight:800; color:var(--accent); margin-top:2px; }
+  .ai-badges { display:flex; gap:6px; margin-top:6px; flex-wrap:wrap; }
+  .price-badge { padding:2px 8px; border-radius:6px; font-size:10px; font-weight:700; }
+  .price-badge.murah { background:#00E67620; color:var(--accent); border:1px solid #00E67640; }
+  .price-badge.wajar { background:#FFD60020; color:var(--gold); border:1px solid #FFD60040; }
+  .price-badge.tinggi { background:#F4433620; color:#F44336; border:1px solid #F4433640; }
+  .health-bar-wrap { margin-top:6px; }
+  .health-label { font-size:10px; color:var(--sub); margin-bottom:3px; display:flex; justify-content:space-between; }
+  .health-bar { height:5px; background:#2E4D30; border-radius:3px; overflow:hidden; }
+  .health-fill { height:100%; border-radius:3px; background:linear-gradient(90deg,#F44336,#FFD600,var(--accent)); transition:width 1s; }
+  .vehicle-actions { display:flex; gap:6px; margin-top:8px; }
+  .action-btn { flex:1; padding:7px; border-radius:8px; font-size:11px; font-weight:600; border:none; cursor:pointer; }
+  .wa-btn { background:#25D366; color:#fff; }
+  .maps-btn { background:#1565C0; color:#fff; }
+
+  /* ── NOTIF SCREEN ── */
+  .notif-list { padding:8px 0; }
+  .notif-item { display:flex; gap:10px; padding:12px 16px; border-bottom:1px solid #1A2E1C; cursor:pointer; transition:.2s; }
+  .notif-item:hover { background:#1A2E1C50; }
+  .notif-item.unread { background:#E3F2FD08; border-left:3px solid #42A5F5; }
+  .notif-icon-wrap { width:36px; height:36px; border-radius:50%; background:#1A2E1C; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; }
+  .notif-content { flex:1; }
+  .notif-title { font-size:12px; font-weight:700; color:#fff; }
+  .notif-msg { font-size:11px; color:var(--sub); margin-top:2px; line-height:1.4; }
+  .notif-time { font-size:10px; color:#666; margin-top:3px; }
+  .notif-dot { width:8px; height:8px; border-radius:50%; background:var(--blue); margin-top:4px; flex-shrink:0; }
+
+  /* ── JUAL SCREEN ── */
+  .form-section { padding:12px 16px; }
+  .form-label { font-size:11px; color:var(--sub); margin-bottom:4px; font-weight:600; }
+  .form-input { width:100%; background:#1A2E1C; border:1px solid var(--border); border-radius:10px; padding:10px 12px; color:#fff; font-size:13px; font-family:inherit; margin-bottom:10px; outline:none; }
+  .form-input:focus { border-color:var(--green3); }
+  .ai-advisor { background:linear-gradient(135deg,#0d2e1a,#162418); border:1px solid #2E4D30; border-radius:12px; padding:12px; margin-bottom:10px; }
+  .ai-advisor-title { font-size:11px; font-weight:700; color:var(--gold); margin-bottom:6px; }
+  .ai-advisor-price { font-size:18px; font-weight:800; color:var(--accent); }
+  .ai-advisor-note { font-size:10px; color:var(--sub); margin-top:2px; }
+  .security-layers { background:#0d1b1a; border:1px solid #1a3a3a; border-radius:12px; padding:12px; margin:10px 16px; }
+  .security-title { font-size:11px; font-weight:700; color:#42A5F5; margin-bottom:8px; }
+  .security-item { display:flex; align-items:center; gap:6px; font-size:11px; color:var(--sub); margin-bottom:5px; }
+  .security-item .ok { color:var(--accent); }
+
+  /* ── VERIFY SCREEN ── */
+  .verify-screen { background:#0D1B2A; height:100%; display:flex; flex-direction:column; align-items:center; padding:20px; }
+  .verify-header-bar { width:100%; display:flex; justify-content:center; background:#1A2940; border-radius:12px; padding:12px; margin-bottom:20px; }
+  .verify-icon { font-size:56px; margin:20px 0 10px; }
+  .verify-cam { width:220px; height:260px; background:#111; border-radius:16px; border:3px solid #42A5F5; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
+  .cam-overlay { position:absolute; inset:0; border:2px solid #42A5F5; border-radius:12px; }
+  .cam-person { font-size:64px; opacity:.3; }
+  .scan-line { position:absolute; width:100%; height:2px; background:linear-gradient(90deg,transparent,#42A5F5,transparent); animation:scanAnim 2s linear infinite; }
+  @keyframes scanAnim { 0%{top:0} 100%{top:100%} }
+
+  /* ── BOTTOM NAV ── */
+  .bottom-nav { position:absolute; bottom:0; left:0; right:0; background:#162418; border-top:1px solid var(--border); display:flex; padding:8px 0 4px; z-index:10; }
+  .nav-item { flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer; padding:4px; transition:.2s; opacity:.6; }
+  .nav-item.active { opacity:1; }
+  .nav-icon { font-size:20px; }
+  .nav-label { font-size:9px; color:var(--sub); font-weight:600; }
+  .nav-item.active .nav-label { color:var(--accent); }
+
+  /* ── FEATURES SECTION ── */
+  .features { padding:60px 20px; max-width:1100px; margin:0 auto; }
+  .section-title { text-align:center; font-size:2rem; font-weight:800; margin-bottom:8px; }
+  .section-sub { text-align:center; color:var(--sub); margin-bottom:40px; }
+  .features-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:20px; }
+  .feature-card { background:linear-gradient(135deg,#111,#1A1A1A); border:1px solid #222; border-radius:20px; padding:24px; transition:.3s; }
+  .feature-card:hover { border-color:#2E7D3260; transform:translateY(-4px); box-shadow:0 20px 40px #00000080; }
+  .feature-emoji { font-size:36px; margin-bottom:12px; display:block; }
+  .feature-title { font-size:15px; font-weight:700; margin-bottom:6px; }
+  .feature-desc { font-size:13px; color:#888; line-height:1.6; }
+  .feature-tag { display:inline-block; margin-top:10px; padding:3px 10px; border-radius:20px; font-size:10px; font-weight:700; background:#00E67615; color:var(--accent); border:1px solid #00E67630; }
+
+  /* ── SECURITY SECTION ── */
+  .security-section { padding:60px 20px; background:#080808; }
+  .security-inner { max-width:800px; margin:0 auto; }
+  .security-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px; margin-top:32px; }
+  .sec-card { background:#111; border:1px solid #1a1a1a; border-radius:16px; padding:20px; text-align:center; }
+  .sec-num { font-size:28px; font-weight:900; color:var(--accent); }
+  .sec-label { font-size:12px; color:#888; margin-top:4px; }
+
+  /* ── FOOTER ── */
+  footer { text-align:center; padding:40px 20px; color:#555; border-top:1px solid #111; }
+  footer span { color:var(--accent); }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width:4px; }
+  ::-webkit-scrollbar-track { background:#0a0a0a; }
+  ::-webkit-scrollbar-thumb { background:#333; border-radius:2px; }
+
+  @media(max-width:700px) { .phone-section { flex-direction:column; align-items:center; } .hero h1 { font-size:1.8rem; } }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">🤖 Powered by AI • Marketplace Kendaraan #1</div>
+  <h1>AdiMarket</h1>
+  <p>Marketplace kendaraan terpercaya dengan teknologi AI canggih untuk jual-beli yang aman, cerdas, dan transparan.</p>
+  <div class="hero-btns">
+    <button class="btn-primary" onclick="scrollToPhone()">🎮 Lihat Demo Interaktif</button>
+    <button class="btn-ghost" onclick="scrollToFeatures()">✨ Lihat Fitur AI</button>
+  </div>
+</section>
+
+<!-- PHONE MOCKUP SECTION -->
+<section class="phone-section" id="demo">
+  <div class="phone">
+    <div class="phone-notch"></div>
+    <div class="phone-screen">
+
+      <!-- STATUS BAR -->
+      <div class="status-bar">
+        <span>19:36</span>
+        <span>📶 WiFi 95%🔋</span>
+      </div>
+
+      <!-- PAGE 1: DASHBOARD -->
+      <div class="screen-page active" id="page-dashboard">
+        <div class="dash-header">
+          <div class="dash-header-row">
+            <div>
+              <div class="dash-greeting">Selamat datang 👋</div>
+              <div class="dash-title">AdiMarket</div>
+            </div>
+            <div class="header-icons">
+              <button class="header-btn" onclick="goTo('notif')" title="Notifikasi">
+                🔔
+                <span class="badge">3</span>
+              </button>
+              <button class="header-btn" title="Wallpaper">🖼️</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-row">
+          <div class="stat-card"><div class="stat-num">42</div><div class="stat-label">Iklan Aktif</div></div>
+          <div class="stat-card"><div class="stat-num">12</div><div class="stat-label">Terjual</div></div>
+          <div class="stat-card"><div class="stat-num">98%</div><div class="stat-label">Terverifikasi</div></div>
+        </div>
+
+        <div class="menu-grid">
+          <div class="menu-card" onclick="goTo('beli')">
+            <span class="menu-icon">🚗</span>
+            <div class="menu-name">Beli Kendaraan</div>
+            <div class="menu-sub">42 iklan aktif</div>
+            <div class="menu-ai-badge">🤖 AI Smart Search</div>
+          </div>
+          <div class="menu-card" onclick="goTo('jual')">
+            <span class="menu-icon">💰</span>
+            <div class="menu-name">Jual Kendaraan</div>
+            <div class="menu-sub">Pasang iklan gratis</div>
+            <div class="menu-ai-badge">🛡️ 7-Layer Security</div>
+          </div>
+          <div class="menu-card" onclick="goTo('chatbot')">
+            <span class="menu-icon">🤖</span>
+            <div class="menu-name">AI Chatbot</div>
+            <div class="menu-sub">Groq-powered</div>
+            <div class="menu-ai-badge">✨ Natural Language</div>
+          </div>
+          <div class="menu-card">
+            <span class="menu-icon">📊</span>
+            <div class="menu-name">Analisis Penjualan</div>
+            <div class="menu-sub">Grafik & statistik</div>
+            <div class="menu-ai-badge">📈 AI Insight</div>
+          </div>
+        </div>
+
+        <div style="padding:8px 16px 80px;">
+          <div style="background:linear-gradient(135deg,#0d2e1a,#162418);border:1px solid #2E4D30;border-radius:16px;padding:14px;">
+            <div style="font-size:11px;color:#FFD600;font-weight:700;margin-bottom:8px;">🏆 AdiMarket AI Premium Features</div>
+            <div style="font-size:11px;color:#A5D6A7;line-height:1.8;">
+              ✅ Price Fairness Badge 🟢🟡🔴<br>
+              ✅ Health Score kendaraan (0–100)<br>
+              ✅ AI Negotiation Assistant<br>
+              ✅ Smart Natural Language Search<br>
+              ✅ Scan Wajah Penjual (Biometrik)
+            </div>
+          </div>
+        </div>
+
+        <div class="bottom-nav">
+          <div class="nav-item active"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></div>
+          <div class="nav-item" onclick="goTo('beli')"><span class="nav-icon">🔍</span><span class="nav-label">Cari</span></div>
+          <div class="nav-item" onclick="goTo('notif')"><span class="nav-icon">🔔</span><span class="nav-label">Notif</span></div>
+          <div class="nav-item"><span class="nav-icon">👤</span><span class="nav-label">Profil</span></div>
+        </div>
+      </div>
+
+      <!-- PAGE 2: BELI -->
+      <div class="screen-page" id="page-beli">
+        <div class="screen-header">
+          <span class="back-btn" onclick="goTo('dashboard')">←</span>
+          <span class="screen-title">🚗 Beli Kendaraan</span>
+        </div>
+        <div class="search-bar">
+          <span>🔍</span>
+          <input type="text" placeholder="Cari motor matik murah..." id="searchInput" oninput="filterVehicles()">
+        </div>
+        <div class="filter-chips">
+          <div class="chip active" onclick="filterChip(this,'semua')">Semua</div>
+          <div class="chip" onclick="filterChip(this,'mobil')">🚗 Mobil</div>
+          <div class="chip" onclick="filterChip(this,'motor')">🏍️ Motor</div>
+          <div class="chip" onclick="filterChip(this,'murah')">🟢 Murah</div>
+        </div>
+        <div id="vehicleList">
+          <!-- generated by JS -->
+        </div>
+        <div style="height:70px;"></div>
+        <div class="bottom-nav">
+          <div class="nav-item" onclick="goTo('dashboard')"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></div>
+          <div class="nav-item active"><span class="nav-icon">🔍</span><span class="nav-label">Cari</span></div>
+          <div class="nav-item" onclick="goTo('notif')"><span class="nav-icon">🔔</span><span class="nav-label">Notif</span></div>
+          <div class="nav-item"><span class="nav-icon">👤</span><span class="nav-label">Profil</span></div>
+        </div>
+      </div>
+
+      <!-- PAGE 3: NOTIFIKASI -->
+      <div class="screen-page" id="page-notif">
+        <div class="screen-header">
+          <span class="back-btn" onclick="goTo('dashboard')">←</span>
+          <span class="screen-title">🔔 Notifikasi</span>
+          <button onclick="markAllRead()" style="background:#1B5E20;color:#fff;border:none;border-radius:8px;padding:4px 10px;font-size:10px;cursor:pointer;">Baca Semua</button>
+        </div>
+        <div style="padding:8px 16px;font-size:11px;color:#42A5F5;" id="unreadLabel">3 belum dibaca</div>
+        <div class="notif-list" id="notifList">
+          <!-- generated by JS -->
+        </div>
+        <div style="height:70px;"></div>
+        <div class="bottom-nav">
+          <div class="nav-item" onclick="goTo('dashboard')"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></div>
+          <div class="nav-item" onclick="goTo('beli')"><span class="nav-icon">🔍</span><span class="nav-label">Cari</span></div>
+          <div class="nav-item active"><span class="nav-icon">🔔</span><span class="nav-label">Notif</span></div>
+          <div class="nav-item"><span class="nav-icon">👤</span><span class="nav-label">Profil</span></div>
+        </div>
+      </div>
+
+      <!-- PAGE 4: JUAL -->
+      <div class="screen-page" id="page-jual">
+        <div class="screen-header">
+          <span class="back-btn" onclick="goTo('dashboard')">←</span>
+          <span class="screen-title">💰 Jual Kendaraan</span>
+        </div>
+        <div class="form-section" style="overflow-y:auto;max-height:520px;padding-bottom:80px;">
+          <div class="form-label">Nama Kendaraan</div>
+          <input class="form-input" placeholder="Toyota Avanza 1.3 G" oninput="updateAIPrice(this)">
+          <div class="form-label">Tipe</div>
+          <select class="form-input">
+            <option>Mobil</option><option>Motor</option><option>Truk</option>
+          </select>
+          <div class="form-label">Harga</div>
+          <input class="form-input" placeholder="Rp 185.000.000" type="text">
+
+          <div class="ai-advisor" id="aiAdvisor" style="display:none">
+            <div class="ai-advisor-title">🤖 AI Price Advisor</div>
+            <div class="ai-advisor-price" id="aiPrice">Rp 180 Jt – Rp 195 Jt</div>
+            <div class="ai-advisor-note">📊 Berdasarkan 38 iklan serupa di pasar</div>
+          </div>
+
+          <div class="security-layers">
+            <div class="security-title">🛡️ 7-Layer Security AdiMarket</div>
+            <div class="security-item"><span class="ok">✅</span> Hash foto anti duplikat</div>
+            <div class="security-item"><span class="ok">✅</span> AI Fraud Detection Engine</div>
+            <div class="security-item"><span class="ok">✅</span> Admin review sebelum tayang</div>
+            <div class="security-item"><span class="ok">✅</span> Anti iklan bercabang (duplikat)</div>
+            <div class="security-item"><span class="ok">✅</span> Rate limiter (max 3 iklan/HP)</div>
+            <div class="security-item"><span class="ok">✅</span> AI content similarity check</div>
+            <div class="security-item"><span class="ok">✅</span> Scan Wajah + Biometrik</div>
+          </div>
+
+          <button class="btn-primary" style="width:100%;margin-top:8px;" onclick="goTo('verify')">
+            🛡️ Pasang Iklan (Verifikasi Dulu)
+          </button>
+        </div>
+      </div>
+
+      <!-- PAGE 5: VERIFY -->
+      <div class="screen-page" id="page-verify">
+        <div class="verify-screen">
+          <div class="verify-header-bar">
+            <div style="text-align:center">
+              <div style="font-size:15px;font-weight:700;color:#fff;">🛡️ Verifikasi Penjual</div>
+              <div id="verifyStepLabel" style="font-size:11px;color:#90CAF9;margin-top:3px;">Langkah 1 dari 2</div>
+            </div>
+          </div>
+
+          <div id="bioStep">
+            <div class="verify-icon">🔐</div>
+            <div style="font-size:16px;font-weight:700;text-align:center;">Verifikasi Identitas</div>
+            <div style="font-size:12px;color:#B0BEC5;text-align:center;margin:10px 0 20px;line-height:1.6;">Gunakan Face Unlock atau<br>Sidik Jari untuk konfirmasi identitas.</div>
+            <button class="btn-primary" style="width:220px;" onclick="doBiometric()">🔐 Verifikasi Biometrik</button>
+          </div>
+
+          <div id="faceStep" style="display:none;text-align:center;">
+            <div class="verify-cam">
+              <div class="cam-person">👤</div>
+              <div class="scan-line"></div>
+              <div class="cam-overlay"></div>
+            </div>
+            <div style="font-size:13px;font-weight:700;margin:12px 0 6px;">📸 Scan Wajah Penjual</div>
+            <div style="font-size:11px;color:#B0BEC5;margin-bottom:16px;">Posisikan wajah dalam bingkai oval biru</div>
+            <button class="btn-primary" style="width:220px;" onclick="doFaceScan()">📸 Ambil Foto Wajah</button>
+          </div>
+
+          <div id="doneStep" style="display:none;text-align:center;">
+            <div class="verify-icon">✅</div>
+            <div style="font-size:16px;font-weight:700;color:#00E676;">Identitas Terverifikasi!</div>
+            <div style="font-size:12px;color:#B0BEC5;margin:10px 0;">Iklan Anda akan tayang dengan<br>badge 🛡️ Seller Verified</div>
+            <button class="btn-primary" style="width:220px;margin-top:10px;" onclick="goTo('dashboard')">✅ Kembali ke Dashboard</button>
+          </div>
+
+          <div style="margin-top:20px;background:#1A2940;border-radius:10px;padding:12px;width:100%;font-size:11px;color:#78909C;">
+            🔒 Data Anda Aman<br>• Biometrik diproses di perangkat<br>• Tidak dikirim ke server eksternal
+          </div>
+
+          <button onclick="goTo('jual')" style="background:none;border:none;color:#666;font-size:12px;margin-top:12px;cursor:pointer;">← Kembali</button>
+        </div>
+      </div>
+
+      <!-- PAGE 6: CHATBOT -->
+      <div class="screen-page" id="page-chatbot">
+        <div class="screen-header">
+          <span class="back-btn" onclick="goTo('dashboard')">←</span>
+          <span class="screen-title">🤖 AI Chatbot</span>
+          <span style="font-size:10px;color:#00E676;">● Online</span>
+        </div>
+        <div id="chatMessages" style="padding:12px 16px;overflow-y:auto;height:460px;display:flex;flex-direction:column;gap:10px;">
+          <div style="background:#1A2E1C;border-radius:12px 12px 12px 0;padding:10px 12px;max-width:85%;font-size:12px;line-height:1.6;">
+            👋 Halo! Saya <b>AdiBot</b> — asisten AI AdiMarket.<br>Mau cari kendaraan apa? Ceritakan budget & kebutuhan Anda!
+          </div>
+        </div>
+        <div style="position:absolute;bottom:60px;left:0;right:0;padding:8px 16px;background:#0D1B0F;border-top:1px solid #1A2E1C;display:flex;gap:8px;">
+          <input id="chatInput" style="flex:1;background:#1A2E1C;border:1px solid #2E4D30;border-radius:10px;padding:8px 12px;color:#fff;font-size:12px;font-family:inherit;outline:none;" placeholder="Cari motor matik budget 10 juta...">
+          <button onclick="sendChat()" style="background:var(--green2);border:none;border-radius:10px;padding:8px 14px;color:#fff;font-size:14px;cursor:pointer;">➤</button>
+        </div>
+        <div class="bottom-nav">
+          <div class="nav-item" onclick="goTo('dashboard')"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></div>
+          <div class="nav-item"><span class="nav-icon">🔍</span><span class="nav-label">Cari</span></div>
+          <div class="nav-item"><span class="nav-icon">🔔</span><span class="nav-label">Notif</span></div>
+          <div class="nav-item"><span class="nav-icon">👤</span><span class="nav-label">Profil</span></div>
+        </div>
+      </div>
+
+    </div><!-- end phone-screen -->
+  </div><!-- end phone -->
+
+  <!-- DESCRIPTION PANEL -->
+  <div style="max-width:360px;padding:20px 0;">
+    <div id="descPanel">
+      <div style="font-size:11px;color:var(--sub);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;">📱 Demo Interaktif</div>
+      <h2 style="font-size:1.6rem;font-weight:800;line-height:1.2;margin-bottom:14px;">Klik menu di HP untuk<br>menjelajahi fitur</h2>
+      <div id="featureDesc" style="color:#888;font-size:14px;line-height:1.7;">
+        Navigasi layar dengan klik tombol di dalam tampilan HP simulasi di kiri. Semua fitur AI aktif!
+      </div>
+      <div style="margin-top:24px;display:flex;flex-direction:column;gap:10px;" id="quickBtns">
+        <button class="btn-primary" onclick="goTo('beli')" style="text-align:left;padding:12px 16px;">🚗 Coba: Cari Kendaraan AI</button>
+        <button class="btn-primary" onclick="goTo('notif')" style="text-align:left;padding:12px 16px;background:linear-gradient(135deg,#1565C0,#1976D2);">🔔 Coba: Notifikasi In-App</button>
+        <button class="btn-primary" onclick="goTo('chatbot')" style="text-align:left;padding:12px 16px;background:linear-gradient(135deg,#4A148C,#6A1B9A);">🤖 Coba: AI Chatbot</button>
+        <button class="btn-primary" onclick="goTo('verify')" style="text-align:left;padding:12px 16px;background:linear-gradient(135deg,#B71C1C,#C62828);">📸 Coba: Scan Wajah Penjual</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES SECTION -->
+<section class="features" id="features">
+  <div class="section-title">🤖 Fitur AI Premium</div>
+  <div class="section-sub">Teknologi kecerdasan buatan yang membuat AdiMarket berbeda dari marketplace biasa</div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <span class="feature-emoji">🟢</span>
+      <div class="feature-title">AI Price Fairness Badge</div>
+      <div class="feature-desc">Analisis harga otomatis dibanding rata-rata pasar. Label 🟢 Murah / 🟡 Wajar / 🔴 Tinggi di setiap iklan.</div>
+      <span class="feature-tag">⚡ Real-time</span>
+    </div>
+    <div class="feature-card">
+      <span class="feature-emoji">🏥</span>
+      <div class="feature-title">AI Health Score</div>
+      <div class="feature-desc">Skor kondisi kendaraan 0–100 berdasarkan usia, harga relatif, kelengkapan info, dan transparansi foto.</div>
+      <span class="feature-tag">📊 ML Analysis</span>
+    </div>
+    <div class="feature-card">
+      <span class="feature-emoji">💡</span>
+      <div class="feature-title">AI Negotiation Assistant</div>
+      <div class="feature-desc">Rekomendasi harga tawar + checklist pengecekan fisik sebelum transaksi. Langsung buka WhatsApp penjual.</div>
+      <span class="feature-tag">🤝 Smart Deal</span>
+    </div>
+    <div class="feature-card">
+      <span class="feature-emoji">🔍</span>
+      <div class="feature-title">Smart Natural Language Search</div>
+      <div class="feature-desc">Ketik "motor matik murah untuk pelajar" — AI memahami konteks dan mencocokkan kendaraan yang tepat.</div>
+      <span class="feature-tag">🧠 NLP Engine</span>
+    </div>
+    <div class="feature-card">
+      <span class="feature-emoji">📸</span>
+      <div class="feature-title">Scan Wajah Penjual</div>
+      <div class="feature-desc">Verifikasi 2 langkah: Biometrik HP (Face Unlock/Fingerprint) + ML Kit face detection real-time via kamera.</div>
+      <span class="feature-tag">🛡️ CameraX + ML Kit</span>
+    </div>
+    <div class="feature-card">
+      <span class="feature-emoji">🔔</span>
+      <div class="feature-title">Notifikasi In-App</div>
+      <div class="feature-desc">Badge merah di Dashboard, push notification sistem Android, dan riwayat notifikasi dengan status baca.</div>
+      <span class="feature-tag">✅ NEW</span>
+    </div>
+    <div class="feature-card">
+      <span class="feature-emoji">🤖</span>
+      <div class="feature-title">AI Chatbot (Groq)</div>
+      <div class="feature-desc">Cari kendaraan dengan percakapan natural. "Budget 15 juta, mau motor matic" → AI rekomendasikan dari DB.</div>
+      <span class="feature-tag">⚡ Groq LLM</span>
+    </div>
+    <div class="feature-card">
+      <span class="feature-emoji">🛡️</span>
+      <div class="feature-title">7-Layer Security</div>
+      <div class="feature-desc">Hash foto, AI Fraud Detection, Admin Review, Anti-duplikat, Rate limiter, Similarity check, Scan wajah.</div>
+      <span class="feature-tag">🔒 Enterprise Grade</span>
+    </div>
+  </div>
+</section>
+
+<!-- SECURITY SECTION -->
+<section class="security-section">
+  <div class="security-inner">
+    <div class="section-title" style="text-align:center;">🔒 Keamanan Berlapis</div>
+    <div class="section-sub" style="text-align:center;">AdiMarket adalah marketplace kendaraan paling aman di Indonesia</div>
+    <div class="security-grid">
+      <div class="sec-card"><div class="sec-num">7</div><div class="sec-label">Lapisan Keamanan</div></div>
+      <div class="sec-card"><div class="sec-num">100%</div><div class="sec-label">Iklan Direview Admin</div></div>
+      <div class="sec-card"><div class="sec-num">0</div><div class="sec-label">Iklan Duplikat Lolos</div></div>
+      <div class="sec-card"><div class="sec-num">AI</div><div class="sec-label">Fraud Detection</div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>🚗 <span>AdiMarket</span> — Marketplace Kendaraan AI Terpercaya</div>
+  <div style="margin-top:8px;font-size:12px;">Built with ❤️ using Android • Java • ML Kit • CameraX • Groq AI</div>
+</footer>
+
+<script>
+// ── DATA ──
+const vehicles = [
+  { name:'Toyota Avanza 1.3 G', type:'mobil', year:2021, price:'Rp 185 Jt', emoji:'🚗', badge:'murah', health:85, loc:'Bandung' },
+  { name:'Honda Beat FI ESP', type:'motor', year:2022, price:'Rp 14.5 Jt', emoji:'🏍️', badge:'wajar', health:90, loc:'Jakarta' },
+  { name:'Mitsubishi Xpander', type:'mobil', year:2020, price:'Rp 235 Jt', emoji:'🚙', badge:'tinggi', health:72, loc:'Surabaya' },
+  { name:'Yamaha NMAX 155', type:'motor', year:2023, price:'Rp 28 Jt', emoji:'🛵', badge:'murah', health:95, loc:'Bekasi' },
+  { name:'Suzuki Ertiga GX', type:'mobil', year:2019, price:'Rp 155 Jt', emoji:'🚐', badge:'wajar', health:68, loc:'Depok' },
+];
+
+const notifs = [
+  { icon:'🎉', title:'Iklan Anda Disetujui!', msg:'Iklan "Avanza 1.3 G" sudah tayang dan bisa dilihat pembeli.', time:'5 menit lalu', unread:true, type:'approve' },
+  { icon:'📋', title:'Iklan Baru Menunggu Review', msg:'Ada iklan Mobil baru: "Xpander Sport". Silakan review di panel admin.', time:'32 menit lalu', unread:true, type:'new' },
+  { icon:'❌', title:'Iklan Tidak Disetujui', msg:'Iklan "Beat Modif" tidak lolos review. Periksa & perbaiki sebelum pasang ulang.', time:'2 jam lalu', unread:true, type:'reject' },
+  { icon:'👋', title:'Selamat Datang di AdiMarket!', msg:'Temukan kendaraan impian atau pasang iklan gratis. Ditenagai AI 🤖', time:'kemarin', unread:false, type:'welcome' },
+];
+
+const chatReplies = [
+  "Baik! Saya carikan motor matik dengan budget itu. Dari data kami, Honda Beat 2022 (Rp 14.5 Jt) dan Yamaha Vario 2021 (Rp 16 Jt) sangat sesuai! Keduanya kondisi prima dengan Health Score >85. Mau lihat detailnya?",
+  "Untuk mobil keluarga budget segitu, saya rekomendasikan Toyota Avanza 2021 atau Mitsubishi Xpander 2019. Keduanya spacious & terawat. AI Price Badge kami menilai harganya 🟢 MURAH untuk pasar saat ini.",
+  "Lokasi Bandung ya? Ada 3 iklan mobil sedan terverifikasi di Bandung. Harga mulai 95 Jt. Mau saya tampilkan yang terdekat dari pusat kota?",
+  "Oke! Berdasarkan analisis AI kami, motor matic di kisaran 10-15 juta paling banyak tersedia merek Honda dan Yamaha tahun 2019-2022. Rating kesehatan rata-rata 78/100. Mau filter berdasarkan kota?",
+];
+
+let chatReplyIdx = 0;
+
+// ── NAVIGATION ──
+let currentPage = 'dashboard';
+function goTo(page) {
+  const current = document.getElementById('page-' + currentPage);
+  const next = document.getElementById('page-' + page);
+  if (!next || page === currentPage) return;
+  current.classList.remove('active');
+  current.classList.add('prev');
+  next.classList.add('active');
+  setTimeout(() => current.classList.remove('prev'), 400);
+  currentPage = page;
+  if (page === 'beli') renderVehicles(vehicles);
+  if (page === 'notif') renderNotifs();
+  if (page === 'chatbot') {
+    const input = document.getElementById('chatInput');
+    if (input) input.addEventListener('keydown', e => { if (e.key==='Enter') sendChat(); });
+  }
+  // Update description panel
+  updateDesc(page);
+}
+
+function updateDesc(page) {
+  const descs = {
+    dashboard: { t:'🏠 Dashboard', d:'Pusat kendali AdiMarket. Lihat statistik real-time, akses semua fitur, dan pantau badge notifikasi 🔔 di pojok kanan atas.' },
+    beli: { t:'🚗 Beli Kendaraan', d:'AI Smart Search — ketik apa saja, AI memahami konteks. Setiap iklan dilengkapi Price Badge 🟢🟡🔴 dan Health Score kendaraan.' },
+    notif: { t:'🔔 Notifikasi In-App', d:'Sistem notifikasi real-time: badge merah di Dashboard, push notification Android, dan riwayat dengan status baca/belum baca.' },
+    jual: { t:'💰 Jual Kendaraan', d:'AI Price Advisor memberikan estimasi harga pasar. Dilindungi 7 lapis keamanan. Wajib verifikasi wajah sebelum iklan disimpan.' },
+    verify: { t:'📸 Verifikasi Penjual', d:'Proses 2 langkah: Biometrik HP (Face Unlock/Sidik Jari) + ML Kit face detection real-time. Mencegah penjual palsu.' },
+    chatbot: { t:'🤖 AI Chatbot', d:'Groq-powered AI Assistant. Ceritakan kebutuhan Anda dalam bahasa alami, AI akan merekomendasikan kendaraan dari database.' },
+  };
+  const d = descs[page];
+  if (!d) return;
+  document.getElementById('featureDesc').innerHTML = `<b style="color:#fff;font-size:15px;">${d.t}</b><br><br>${d.d}`;
+}
+
+// ── VEHICLES ──
+function renderVehicles(data) {
+  const list = document.getElementById('vehicleList');
+  list.innerHTML = data.map(v => `
+    <div class="vehicle-card">
+      <div class="vehicle-img">${v.emoji}</div>
+      <div class="vehicle-body">
+        <div class="vehicle-top">
+          <div>
+            <div class="vehicle-name">${v.name}</div>
+            <div class="vehicle-year">${v.type.toUpperCase()} • ${v.year}</div>
+          </div>
+          <span style="font-size:16px;cursor:pointer;">❤️</span>
+        </div>
+        <div class="vehicle-price">${v.price}</div>
+        <div class="ai-badges">
+          <span class="price-badge ${v.badge}">${v.badge==='murah'?'🟢 MURAH':v.badge==='wajar'?'🟡 WAJAR':'🔴 TINGGI'}</span>
+          <span style="background:#ffffff10;border-radius:6px;padding:2px 7px;font-size:10px;color:#aaa;">📍 ${v.loc}</span>
+        </div>
+        <div class="health-bar-wrap">
+          <div class="health-label"><span>🏥 Health Score</span><span style="color:${v.health>80?'#00E676':v.health>60?'#FFD600':'#F44336'}">${v.health}/100</span></div>
+          <div class="health-bar"><div class="health-fill" style="width:${v.health}%"></div></div>
+        </div>
+        <div class="vehicle-actions">
+          <button class="action-btn wa-btn" onclick="showNegotiation('${v.name}','${v.price}')">💬 WhatsApp</button>
+          <button class="action-btn maps-btn">🗺️ Maps</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterVehicles() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const filtered = vehicles.filter(v =>
+    v.name.toLowerCase().includes(q) || v.type.includes(q) ||
+    (q.includes('murah') && v.badge==='murah') ||
+    (q.includes('motor') && v.type==='motor') ||
+    (q.includes('mobil') && v.type==='mobil')
+  );
+  renderVehicles(filtered.length ? filtered : vehicles);
+}
+
+function filterChip(el, type) {
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  if (type==='semua') renderVehicles(vehicles);
+  else if (type==='murah') renderVehicles(vehicles.filter(v=>v.badge==='murah'));
+  else renderVehicles(vehicles.filter(v=>v.type===type));
+}
+
+function showNegotiation(name, price) {
+  const low = parseInt(price.replace(/\D/g,'')) * 0.85;
+  const high = parseInt(price.replace(/\D/g,'')) * 0.95;
+  alert(`🤖 AI Negotiation Assistant\n\n💡 "${name}"\n\nRekomendasi harga tawar:\n✅ Rp ${Math.round(low)} Jt – Rp ${Math.round(high)} Jt\n\nChecklist survey fisik:\n1. Cek mesin & oli\n2. Test AC & power window\n3. Cek nomor rangka vs STNK\n4. Test drive minimal 5 menit`);
+}
+
+// ── NOTIFIKASI ──
+function renderNotifs() {
+  const list = document.getElementById('notifList');
+  const unread = notifs.filter(n=>n.unread).length;
+  const lbl = document.getElementById('unreadLabel');
+  if (lbl) lbl.textContent = unread > 0 ? `${unread} belum dibaca` : 'Semua sudah dibaca ✅';
+  list.innerHTML = notifs.map((n,i) => `
+    <div class="notif-item ${n.unread?'unread':''}" onclick="markRead(${i})">
+      <div class="notif-icon-wrap">${n.icon}</div>
+      <div class="notif-content">
+        <div class="notif-title">${n.title}</div>
+        <div class="notif-msg">${n.msg}</div>
+        <div class="notif-time">${n.time}</div>
+      </div>
+      ${n.unread ? '<div class="notif-dot"></div>' : ''}
+    </div>
+  `).join('');
+}
+
+function markRead(i) {
+  notifs[i].unread = false;
+  renderNotifs();
+  const badge = document.querySelector('.badge');
+  const unread = notifs.filter(n=>n.unread).length;
+  if (badge) badge.textContent = unread > 0 ? unread : '';
+  if (badge && unread === 0) badge.style.display = 'none';
+}
+
+function markAllRead() {
+  notifs.forEach(n => n.unread = false);
+  renderNotifs();
+  const badge = document.querySelector('.badge');
+  if (badge) badge.style.display = 'none';
+}
+
+// ── JUAL AI ADVISOR ──
+function updateAIPrice(input) {
+  const advisor = document.getElementById('aiAdvisor');
+  const priceEl = document.getElementById('aiPrice');
+  if (input.value.length > 3) {
+    advisor.style.display = 'block';
+    const prices = ['Rp 180 Jt – Rp 195 Jt','Rp 13 Jt – Rp 16 Jt','Rp 220 Jt – Rp 250 Jt','Rp 25 Jt – Rp 32 Jt'];
+    priceEl.textContent = prices[Math.floor(Math.random() * prices.length)];
+  } else { advisor.style.display = 'none'; }
+}
+
+// ── VERIFY FLOW ──
+function doBiometric() {
+  document.getElementById('bioStep').innerHTML = `<div class="verify-icon" style="animation:spin .5s">✅</div><div style="color:#00E676;font-weight:700;font-size:15px;text-align:center;">Biometrik Berhasil!</div>`;
+  setTimeout(() => {
+    document.getElementById('verifyStepLabel').textContent = 'Langkah 2 dari 2';
+    document.getElementById('bioStep').style.display = 'none';
+    document.getElementById('faceStep').style.display = 'block';
+  }, 1200);
+}
+
+function doFaceScan() {
+  const btn = event.target;
+  btn.textContent = '🔍 Menganalisis...';
+  btn.disabled = true;
+  setTimeout(() => {
+    document.getElementById('faceStep').style.display = 'none';
+    document.getElementById('doneStep').style.display = 'block';
+    document.getElementById('verifyStepLabel').textContent = '✅ Selesai';
+  }, 2000);
+}
+
+// ── CHATBOT ──
+function sendChat() {
+  const input = document.getElementById('chatInput');
+  const messages = document.getElementById('chatMessages');
+  const text = input.value.trim();
+  if (!text) return;
+
+  // User bubble
+  messages.innerHTML += `<div style="background:#1B5E20;border-radius:12px 12px 0 12px;padding:10px 12px;max-width:85%;align-self:flex-end;font-size:12px;margin-left:auto;">${text}</div>`;
+  input.value = '';
+
+  // Bot typing
+  setTimeout(() => {
+    const reply = chatReplies[chatReplyIdx % chatReplies.length];
+    chatReplyIdx++;
+    messages.innerHTML += `<div style="background:#1A2E1C;border-radius:12px 12px 12px 0;padding:10px 12px;max-width:85%;font-size:12px;line-height:1.6;">🤖 ${reply}</div>`;
+    messages.scrollTop = messages.scrollHeight;
+  }, 1000);
+
+  messages.scrollTop = messages.scrollHeight;
+}
+
+// ── SCROLL ──
+function scrollToPhone() { document.getElementById('demo').scrollIntoView({behavior:'smooth'}); }
+function scrollToFeatures() { document.getElementById('features').scrollIntoView({behavior:'smooth'}); }
+
+// Init
+renderVehicles(vehicles);
+renderNotifs();
+</script>
+</body>
+</html>

@@ -4,126 +4,476 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F5F5F5"
-    android:padding="16dp">
+    android:background="#F5F5F5">
 
-    <!-- Header -->
-    <TextView
-        android:id="@+id/tvBuyVehicleHeader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/buy_vehicle"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="#212121"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="16dp" />
-
-    <!-- Container Menu Utama (Hanya Mobil dan Motor) -->
-    <LinearLayout
-        android:id="@+id/llCategorySelection"
+    <!-- HEADER -->
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:visibility="visible">
+        android:layout_height="160dp">
 
-        <TextView
-            android:id="@+id/tvSelectCategoryLabel"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/headerImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bg_vehicle_header" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_image_overlay" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/select_category"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="#212121"
-            android:layout_marginBottom="32dp" />
+            android:orientation="vertical"
+            android:padding="20dp"
+            app:layout_constraintBottom_toBottomOf="parent">
 
-        <Button
-            android:id="@+id/btnMobil"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:text="@string/car"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:backgroundTint="#388E3C"
-            android:textColor="#FFFFFF"
-            android:layout_marginBottom="16dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🚗 Cari Kendaraan"
+                android:textColor="#FFFFFF"
+                android:textSize="22sp"
+                android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/btnMotor"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:text="@string/motorcycle"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:backgroundTint="#388E3C"
-            android:textColor="#FFFFFF"
-            android:layout_marginBottom="16dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Temukan kendaraan impianmu"
+                android:textColor="#CCFFFFFF"
+                android:textSize="13sp" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <Button
-            android:id="@+id/btnLainnya"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:text="@string/others"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:backgroundTint="#388E3C"
-            android:textColor="#FFFFFF" />
+    <!-- SEARCH BAR GLOBAL -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:background="#FFFFFF"
+        android:elevation="4dp">
 
+        <EditText
+            android:id="@+id/etCariKendaraan"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:hint="🔍  Cari merek, nama, tipe..."
+            android:background="@drawable/search_background"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textSize="14sp"
+            android:imeOptions="actionSearch"
+            android:inputType="text" />
+
+        <ImageButton
+            android:id="@+id/btnFilter"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/btn_green_rounded"
+            android:src="@android:drawable/ic_menu_sort_by_size"
+            android:tint="#FFFFFF"
+            android:contentDescription="Filter" />
     </LinearLayout>
 
-    <!-- Container Konten (Pencarian + List) - Awalnya GONE -->
+    <!-- FILTER PANEL (awalnya GONE) -->
     <LinearLayout
-        android:id="@+id/llContent"
+        android:id="@+id/llFilterPanel"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:background="#FFFFFF"
+        android:padding="12dp"
+        android:visibility="gone"
+        android:elevation="2dp">
+
+        <!-- Baris 1: Merek + Tipe -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <EditText
+                android:id="@+id/etFilterMerek"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="44dp"
+                android:hint="Merek (Honda, Toyota...)"
+                android:background="@drawable/search_background"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:textSize="13sp"
+                android:layout_marginEnd="8dp" />
+
+            <Spinner
+                android:id="@+id/spinnerTipe"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="44dp"
+                android:background="@drawable/search_background"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp" />
+        </LinearLayout>
+
+        <!-- Baris 2: Harga Min - Max -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="💰 Rentang Harga"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:layout_marginBottom="4dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="8dp">
 
-            <ImageButton
-                android:id="@+id/btnBackToMenu"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@android:drawable/ic_menu_revert"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                app:tint="#388E3C" />
+            <EditText
+                android:id="@+id/etHargaMin"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="44dp"
+                android:hint="Min (juta)"
+                android:background="@drawable/search_background"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:inputType="number"
+                android:textSize="13sp" />
 
             <TextView
-                android:id="@+id/tvSelectedCategory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Kategori"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="#212121"
-                android:layout_marginStart="8dp" />
+                android:text=" — "
+                android:textSize="16sp"
+                android:textColor="#666666" />
+
+            <EditText
+                android:id="@+id/etHargaMax"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="44dp"
+                android:hint="Max (juta)"
+                android:background="@drawable/search_background"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:inputType="number"
+                android:textSize="13sp" />
         </LinearLayout>
 
-        <!-- Search Bar -->
-        <EditText
-            android:id="@+id/etCariKendaraan"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="@string/search_hint"
-            android:background="@drawable/search_background"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:drawableStart="@android:drawable/ic_menu_search"
-            android:drawablePadding="8dp" />
+        <!-- Baris 3: Tahun Min - Max -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="📅 Rentang Tahun"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:layout_marginBottom="4dp" />
 
-        <!-- Daftar Kendaraan Dinamis -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="12dp">
+
+            <EditText
+                android:id="@+id/etTahunMin"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="44dp"
+                android:hint="2010"
+                android:background="@drawable/search_background"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:inputType="number"
+                android:textSize="13sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" — "
+                android:textSize="16sp"
+                android:textColor="#666666" />
+
+            <EditText
+                android:id="@+id/etTahunMax"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="44dp"
+                android:hint="2025"
+                android:background="@drawable/search_background"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:inputType="number"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <!-- Baris 4: Warna Kendaraan -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🎨 Warna Kendaraan"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp" />
+
+        <Spinner
+            android:id="@+id/spinnerWarna"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="@drawable/search_background"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:layout_marginBottom="10dp" />
+
+        <!-- Baris 5: Kondisi Kendaraan -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🏷️ Kondisi Kendaraan"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:layout_marginBottom="4dp" />
+
+        <Spinner
+            android:id="@+id/spinnerKondisi"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="@drawable/search_background"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:layout_marginBottom="10dp" />
+
+        <!-- Tombol Terapkan & Reset -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnResetFilter"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="44dp"
+                android:layout_marginEnd="8dp"
+                android:text="Reset"
+                android:backgroundTint="#EEEEEE"
+                android:textColor="#333333"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/btnTerapkanFilter"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="44dp"
+                android:text="✅ Terapkan Filter"
+                android:backgroundTint="@color/primary_green"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- TABS: Semua / Mobil / Motor / ❤ Favorit -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:background="#FFFFFF">
+
+        <LinearLayout
+            android:id="@+id/llCategorySelection"
+            android:layout_width="wrap_content"
+            android:layout_height="52dp"
+            android:orientation="horizontal"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tabSemua"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="🏠 Semua"
+                android:textSize="13sp"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/btn_green_rounded"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:gravity="center"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/tabMobil"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="🚗 Mobil"
+                android:textSize="13sp"
+                android:textColor="#388E3C"
+                android:background="@drawable/btn_outline_rounded"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:gravity="center"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/tabMotor"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="🏍️ Motor"
+                android:textSize="13sp"
+                android:textColor="#388E3C"
+                android:background="@drawable/btn_outline_rounded"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:gravity="center"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/tabLainnya"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="🚌 Lainnya"
+                android:textSize="13sp"
+                android:textColor="#388E3C"
+                android:background="@drawable/btn_outline_rounded"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:gravity="center"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/tabFavorit"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="❤️ Favorit"
+                android:textSize="13sp"
+                android:textColor="#E91E63"
+                android:background="@drawable/btn_outline_pink"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:gravity="center" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <!-- INFO HASIL FILTER -->
+    <TextView
+        android:id="@+id/tvFilterInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="12sp"
+        android:textColor="#888888"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="6dp"
+        android:paddingBottom="2dp"
+        android:visibility="gone" />
+
+    <!-- EMPTY STATE -->
+    <TextView
+        android:id="@+id/tvEmptyState"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="😔 Belum ada iklan di kategori ini."
+        android:gravity="center"
+        android:layout_marginTop="48dp"
+        android:textColor="#9E9E9E"
+        android:textSize="16sp"
+        android:visibility="gone" />
+
+    <!-- FILTER KOTA -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="📍"
+            android:textSize="18sp"
+            android:layout_marginEnd="8dp"/>
+
+        <Spinner
+            android:id="@+id/spinnerFilterKota"
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            android:layout_weight="1"
+            android:background="@drawable/search_background"
+            android:padding="4dp" />
+    </LinearLayout>
+
+    <!-- CONTAINER DAFTAR KENDARAAN + SHIMMER LOADING -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmerVehicleList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+            <include layout="@layout/placeholder_vehicle_shimmer" />
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvKendaraanDinamis"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="16dp"
+            android:paddingTop="4dp" />
+    </FrameLayout>
+
+    <!-- Legacy views (hidden, kept for compatibility) -->
+    <LinearLayout
+        android:id="@+id/llContent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+        <ImageButton
+            android:id="@+id/btnBackToMenu"
+            android:layout_width="0dp"
+            android:layout_height="0dp" />
+        <TextView
+            android:id="@+id/tvSelectedCategory"
+            android:layout_width="0dp"
+            android:layout_height="0dp" />
     </LinearLayout>
+    <!-- Compatibility: btnMobil, btnMotor, btnLainnya hidden -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/btnMobil"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone" />
+    <androidx.cardview.widget.CardView
+        android:id="@+id/btnMotor"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone" />
+    <androidx.cardview.widget.CardView
+        android:id="@+id/btnLainnya"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone" />
 
 </LinearLayout>

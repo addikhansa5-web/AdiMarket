@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -43,6 +44,7 @@ public class OCRActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ocr);
+        WallpaperHelper.apply(this, findViewById(R.id.headerImage));
 
         // Initialize views
         ivDocument = findViewById(R.id.ivDocument);
@@ -107,18 +109,21 @@ public class OCRActivity extends AppCompatActivity {
     }
 
     private void openCamera() {
-        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
+        Intent intent = new Intent(OCRActivity.this, ScanCaptureActivity.class);
+        startActivityForResult(intent, CAMERA_REQUEST_CODE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
-            documentImage = (Bitmap) data.getExtras().get("data");
-            ivDocument.setImageBitmap(documentImage);
-            btnExtract.setEnabled(true);
+        if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+            String imagePath = data.getStringExtra("image_path");
+            if (imagePath != null) {
+                documentImage = BitmapFactory.decodeFile(imagePath);
+                ivDocument.setImageBitmap(documentImage);
+                btnExtract.setEnabled(true);
+            }
         }
     }
 

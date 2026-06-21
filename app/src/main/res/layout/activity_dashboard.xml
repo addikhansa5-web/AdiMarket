@@ -1,195 +1,568 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rootDashboard"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E8F5E9">
+    android:background="#F8F9FA">
 
+    <!-- Header Image -->
+    <ImageView
+        android:id="@+id/headerImage"
+        android:layout_width="0dp"
+        android:layout_height="260dp"
+        android:src="@drawable/bg_vehicle_header"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Overlay -->
+    <View
+        android:id="@+id/headerOverlay"
+        android:layout_width="0dp"
+        android:layout_height="260dp"
+        android:background="@drawable/bg_image_overlay"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- TOP BAR: Greeting kiri + Tombol Wallpaper kanan -->
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/topBar"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="24dp">
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="44dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Greeting (kiri, ambil sisa ruang) -->
+        <TextView
+            android:id="@+id/tvGreeting"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/greeting_default"
+            android:textColor="#B2DFDB"
+            android:textSize="14sp" />
+
+        <!-- Tombol Notifikasi 🔔 dengan badge merah -->
+        <FrameLayout
+            android:id="@+id/btnNotifikasi"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_marginEnd="8dp">
+
+            <ImageButton
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_notif"
+                android:background="@drawable/bg_circle_white"
+                android:backgroundTint="#44FFFFFF"
+                android:tint="#FFFFFF"
+                android:scaleType="centerInside"
+                android:padding="8dp"
+                android:contentDescription="Notifikasi"
+                android:clickable="false"
+                android:focusable="false" />
+
+            <!-- Badge angka merah -->
+            <TextView
+                android:id="@+id/tvNotifBadge"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_gravity="top|end"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp"
+                android:background="@drawable/badge_red"
+                android:text="0"
+                android:textColor="#FFFFFF"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:visibility="gone" />
+        </FrameLayout>
+
+        <!-- Tombol Wallpaper (kanan, rapi sejajar) -->
+        <ImageButton
+            android:id="@+id/btnWallpaper"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:src="@android:drawable/ic_menu_gallery"
+            android:background="@drawable/bg_circle_white"
+            android:backgroundTint="#44FFFFFF"
+            android:tint="#FFFFFF"
+            android:scaleType="centerInside"
+            android:padding="8dp"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="Ganti Wallpaper" />
+
+        <!-- Tombol Dark Mode Toggle 🌙/☀️ -->
+        <TextView
+            android:id="@+id/btnDarkMode"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:text="🌙"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:background="@drawable/bg_circle_white"
+            android:backgroundTint="#44FFFFFF"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="Toggle Dark Mode" />
+
+        <!-- Tombol Profil / Avatar inisial -->
+        <FrameLayout
+            android:id="@+id/btnProfil"
+            android:layout_width="38dp"
+            android:layout_height="38dp">
+
+            <TextView
+                android:id="@+id/tvAvatarDash"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:text="A"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:background="@drawable/avatar_bg" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/tvDashboardTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/dashboard_title"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintTop_toBottomOf="@id/topBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Stats Bar -->
+    <LinearLayout
+        android:id="@+id/statsBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toBottomOf="@id/tvDashboardTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
-            android:id="@+id/tvDashboardTitle"
+            android:id="@+id/tvStatsIklan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/dashboard_title"
-            android:textSize="26sp"
-            android:textStyle="bold"
-            android:textColor="#2E7D32"
-            android:layout_marginBottom="32dp"
-            android:layout_gravity="center_horizontal" />
+            android:text="📦 0 Iklan"
+            android:textColor="#E8F5E9"
+            android:textSize="12sp"
+            android:background="@drawable/bg_circle_white"
+            android:backgroundTint="#33FFFFFF"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:layout_marginEnd="8dp" />
 
-        <!-- Tombol Jual Kendaraan -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/btnJual"
-            android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:background="#FFFFFF"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/ic_history"
-                    app:tint="#388E3C" />
-
-                <TextView
-                    android:id="@+id/tvSellVehicle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text="@string/sell_vehicle"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="#333333" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <!-- Tombol Beli Kendaraan -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/btnBeli"
-            android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:background="#FFFFFF"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/ic_car"
-                    app:tint="#1976D2" />
-
-                <TextView
-                    android:id="@+id/tvBuyVehicle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text="@string/buy_vehicle"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="#333333" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <!-- Tombol AI Chatbot -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/btnChatbot"
-            android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:background="#F3E5F5"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@android:drawable/ic_menu_send"
-                    app:tint="#8E24AA" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text="Tanya AI (Chatbot)"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="#333333" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <!-- Tombol Analisis Penjualan -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/btnRating"
-            android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:background="#E3F2FD"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@android:drawable/btn_star_big_on"
-                    app:tint="#FBC02D" />
-
-                <TextView
-                    android:id="@+id/tvRatingMenu"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text="@string/rating_menu"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="#333333" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <!-- Tombol Admin Approval -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/btnAdmin"
-            android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:background="#FFF3E0"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@android:drawable/ic_menu_edit"
-                    app:tint="#EF6C00" />
-
-                <TextView
-                    android:id="@+id/tvAdminMenu"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text="@string/admin_menu"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="#333333" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
+        <TextView
+            android:id="@+id/tvStatsPending"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⏳ 0 Pending"
+            android:textColor="#FFF9C4"
+            android:textSize="12sp"
+            android:background="@drawable/bg_circle_white"
+            android:backgroundTint="#33FFFFFF"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp" />
     </LinearLayout>
-</ScrollView>
+
+    <!-- Dashboard Cards Container -->
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingTop="16dp"
+        android:paddingBottom="40dp"
+        android:scrollbars="none"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/statsBar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp">
+
+            <!-- ========== BARIS 1: JUAL + BELI ========== -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="false"
+                android:layout_marginBottom="12dp">
+
+                <!-- JUAL KENDARAAN -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btnJual"
+                    android:layout_width="0dp"
+                    android:layout_height="170dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="6dp"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="8dp">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_card_jual">
+
+                        <!-- Gambar Ilustrasi -->
+                        <ImageView
+                            android:id="@+id/ivJualImg"
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:layout_gravity="top|end"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:src="@drawable/ic_cart"
+                            android:tint="#55FFFFFF"
+                            android:scaleType="fitCenter"
+                            android:alpha="0.5" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_gravity="bottom"
+                            android:padding="16dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="💰"
+                                android:textSize="28sp" />
+
+                            <TextView
+                                android:id="@+id/tvSellVehicle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/sell_vehicle"
+                                android:textColor="#FFFFFF"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:layout_marginTop="4dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Pasang iklan + AI Auto-fill"
+                                android:textColor="#BBDEFB"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+                    </FrameLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- BELI KENDARAAN -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btnBeli"
+                    android:layout_width="0dp"
+                    android:layout_height="170dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="6dp"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="8dp">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_card_beli">
+
+                        <ImageView
+                            android:id="@+id/ivBeliImg"
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:layout_gravity="top|end"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:src="@drawable/ic_car"
+                            android:tint="#55FFFFFF"
+                            android:scaleType="fitCenter"
+                            android:alpha="0.5" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_gravity="bottom"
+                            android:padding="16dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="🚗"
+                                android:textSize="28sp" />
+
+                            <TextView
+                                android:id="@+id/tvBuyVehicle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/buy_vehicle"
+                                android:textColor="#FFFFFF"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:layout_marginTop="4dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Cari, filter, favorit ❤"
+                                android:textColor="#BBDEFB"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+                    </FrameLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <!-- ========== BARIS 2: CHATBOT + ANALISIS ========== -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="false"
+                android:layout_marginBottom="12dp">
+
+                <!-- AI CHATBOT -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btnChatbot"
+                    android:layout_width="0dp"
+                    android:layout_height="170dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="6dp"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="8dp">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_card_chatbot">
+
+                        <ImageView
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:layout_gravity="top|end"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:src="@android:drawable/ic_menu_send"
+                            android:tint="#55FFFFFF"
+                            android:scaleType="fitCenter"
+                            android:alpha="0.5" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_gravity="bottom"
+                            android:padding="16dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="🤖"
+                                android:textSize="28sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/chatbot_menu"
+                                android:textColor="#FFFFFF"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:layout_marginTop="4dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Tanya apapun ke AI"
+                                android:textColor="#E1BEE7"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+                    </FrameLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- ANALISIS PENJUALAN -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btnRating"
+                    android:layout_width="0dp"
+                    android:layout_height="170dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="6dp"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="8dp">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_card_analisis">
+
+                        <ImageView
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:layout_gravity="top|end"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:src="@android:drawable/btn_star_big_on"
+                            android:tint="#55FFFFFF"
+                            android:scaleType="fitCenter"
+                            android:alpha="0.5" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_gravity="bottom"
+                            android:padding="16dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="📊"
+                                android:textSize="28sp" />
+
+                            <TextView
+                                android:id="@+id/tvRatingMenu"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/rating_menu"
+                                android:textColor="#FFFFFF"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:layout_marginTop="4dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Grafik &amp; insight AI"
+                                android:textColor="#FFE0B2"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+                    </FrameLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <!-- ========== BARIS 3: ADMIN ========== -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="false"
+                android:layout_marginBottom="16dp">
+
+                <!-- ADMIN APPROVAL -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btnAdmin"
+                    android:layout_width="0dp"
+                    android:layout_height="140dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="6dp"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="8dp">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_card_admin">
+
+                        <ImageView
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_gravity="top|end"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:src="@android:drawable/ic_menu_edit"
+                            android:tint="#55FFFFFF"
+                            android:scaleType="fitCenter"
+                            android:alpha="0.5" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_gravity="bottom"
+                            android:padding="16dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="🔐"
+                                android:textSize="28sp" />
+
+                            <TextView
+                                android:id="@+id/tvAdminMenu"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/admin_menu"
+                                android:textColor="#FFFFFF"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:layout_marginTop="4dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Setujui/tolak iklan masuk"
+                                android:textColor="#FFCDD2"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+                    </FrameLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- SPACER -->
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginStart="6dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

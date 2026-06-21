@@ -2,24 +2,78 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#CC000000">
+    android:background="#000000">
 
-    <ImageView
-        android:id="@+id/ivFullImage"
+    <!-- ViewPager untuk swipe antar foto -->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPagerFull"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitCenter"
-        android:adjustViewBounds="true"
-        android:layout_gravity="center"/>
+        android:layout_height="match_parent" />
 
+    <!-- Overlay gradien atas dan bawah -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_gravity="top"
+        android:background="@drawable/bg_gradient_top" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_gravity="bottom"
+        android:background="@drawable/bg_gradient_bottom" />
+
+    <!-- Tombol tutup kiri atas -->
     <ImageButton
         android:id="@+id/btnCloseFullImage"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_gravity="top|end"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_gravity="top|start"
         android:layout_margin="16dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
+        android:background="@drawable/bg_circle_white"
+        android:backgroundTint="#66000000"
         android:src="@android:drawable/ic_menu_close_clear_cancel"
+        android:tint="#FFFFFF"
         android:contentDescription="Tutup"
-        android:tint="#FFFFFF"/>
+        android:padding="8dp" />
+
+    <!-- Counter: "1 / 5" di tengah atas -->
+    <TextView
+        android:id="@+id/tvPhotoCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="22dp"
+        android:text="1 / 1"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:background="@drawable/bg_circle_white"
+        android:backgroundTint="#66000000"
+        android:paddingStart="14dp"
+        android:paddingEnd="14dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp" />
+
+    <!-- Indikator dot bawah -->
+    <LinearLayout
+        android:id="@+id/dotIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="24dp"
+        android:orientation="horizontal"
+        android:gravity="center" />
+
+    <!-- Hint swipe (hilang otomatis) -->
+    <TextView
+        android:id="@+id/tvSwipeHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="60dp"
+        android:text="← Geser untuk foto lain →"
+        android:textColor="#BBFFFFFF"
+        android:textSize="12sp" />
+
 </FrameLayout>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@android:color/white">
+
+    <TextView
+        android:id="@+id/tvReplyBuyerName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Balas ke: Pembeli"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="#1B5E20"
+        android:layout_marginBottom="12dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="💰 Tawaran Balik Anda (Juta Rp) — kosongkan jika tidak:"
+        android:textSize="13sp"
+        android:textColor="#333333"
+        android:layout_marginBottom="4dp" />
+
+    <EditText
+        android:id="@+id/etCounterPrice"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="Contoh: 178  (opsional)"
+        android:inputType="numberDecimal"
+        android:background="@drawable/search_background"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:textSize="15sp"
+        android:layout_marginBottom="12dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="💬 Pesan ke Pembeli:"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:textColor="#333333"
+        android:layout_marginBottom="4dp" />
+
+    <EditText
+        android:id="@+id/etSellerReplyMsg"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:hint="Harga sudah pas, silakan datang ke showroom..."
+        android:inputType="textMultiLine"
+        android:gravity="top|start"
+        android:background="@drawable/search_background"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingTop="8dp"
+        android:textSize="13sp"
+        android:layout_marginBottom="4dp" />
+
+</LinearLayout>

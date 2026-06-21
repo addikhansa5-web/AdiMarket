@@ -106,12 +106,19 @@ public class PersonalizationEngine {
 
         Map<String, ?> allPrefs = preferences.getAll();
         for (Map.Entry<String, ?> entry : allPrefs.entrySet()) {
-            if (entry.getKey().startsWith("view_count_")) {
-                totalViews += (Integer) entry.getValue();
-            } else if (entry.getKey().startsWith("search_")) {
-                totalSearches += (Integer) entry.getValue();
-            } else if (entry.getKey().startsWith("favorite_")) {
-                totalFavorites += (Integer) entry.getValue();
+            try {
+                if (entry.getValue() instanceof Integer) {
+                    int value = (Integer) entry.getValue();
+                    if (entry.getKey().startsWith("view_count_")) {
+                        totalViews += value;
+                    } else if (entry.getKey().startsWith("search_")) {
+                        totalSearches += value;
+                    } else if (entry.getKey().startsWith("favorite_")) {
+                        totalFavorites += value;
+                    }
+                }
+            } catch (Exception e) {
+                // Abaikan jika tipe data tidak sesuai
             }
         }
 
@@ -147,11 +154,11 @@ public class PersonalizationEngine {
         long daysSinceActive = (System.currentTimeMillis() - lastActive) / (1000 * 60 * 60 * 24);
 
         if (activityLevel >= 7) {
-            return "Selamat datang kembali, pembeli setia! 🌟";
+            return context.getString(R.string.greeting_loyal);
         } else if (daysSinceActive > 7) {
-            return "Lama tidak berjumpa! Ada kendaraan baru untukmu 🚗";
+            return context.getString(R.string.greeting_returning);
         } else {
-            return "Halo! Siap menemukan kendaraan impianmu? 😊";
+            return context.getString(R.string.greeting_default);
         }
     }
 
@@ -227,6 +234,12 @@ public class PersonalizationEngine {
     // Clear personalization data
     public void resetPersonalization() {
         preferences.edit().clear().apply();
+    }
+
+    // User Preference class for testing/simpler use
+    public static class UserPreference {
+        public String preferredType;
+        public String preferredBrand;
     }
 
     // User Profile class

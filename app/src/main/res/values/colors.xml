@@ -2,4 +2,30 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    
+    <!-- Primary Theme Colors -->
+    <color name="primary_green">#2E7D32</color>
+    <color name="primary_blue">#1976D2</color>
+    <color name="primary_red">#D32F2F</color>
+    
+    <!-- Gradient Start Colors -->
+    <color name="grad_default_start">#F5F5F5</color>
+    <color name="grad_mobil_start">#E3F2FD</color>
+    <color name="grad_motor_start">#FFEBEE</color>
+    <color name="grad_truk_start">#E8F5E9</color>
+    
+    <!-- Gradient End Colors -->
+    <color name="grad_default_end">#E0E0E0</color>
+    <color name="grad_mobil_end">#BBDEFB</color>
+    <color name="grad_motor_end">#FFCDD2</color>
+    <color name="grad_truk_end">#C8E6C9</color>
+
+    <!-- Card Backgrounds -->
+    <color name="card_bg_light">#FAFAFA</color>
+    <color name="text_primary">#212121</color>
+
+    <!-- Wireframe / Metadata Grid Colors -->
+    <color name="wireframe_border">#A04000</color>
+    <color name="wireframe_bg">#FFF9F5</color>
+    <color name="wireframe_label">#D35400</color>
 </resources>

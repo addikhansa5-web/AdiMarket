@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#0D1B0F">
+
+    <!-- Header gradient -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="#1B5E20"
+        android:paddingTop="32dp">
+
+        <!-- Logo -->
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:text="🚗"
+            android:textSize="40sp"
+            android:gravity="center"
+            android:background="#ffffff20"
+            android:backgroundTint="@null"
+            android:padding="12dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AdiMarket"
+            android:textColor="#FFFFFF"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Marketplace Kendaraan AI"
+            android:textColor="#A5D6A7"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <!-- Form Card -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Masuk ke Akun Anda"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Selamat datang kembali 👋"
+                android:textColor="#A5D6A7"
+                android:textSize="13sp"
+                android:layout_marginBottom="24dp" />
+
+            <!-- Username -->
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Username" android:textColor="#A5D6A7" android:textSize="12sp"
+                android:layout_marginBottom="4dp" android:textStyle="bold" />
+            <EditText
+                android:id="@+id/etUsername"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:hint="Masukkan username"
+                android:inputType="text"
+                android:background="@drawable/input_bg"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#666666"
+                android:textSize="14sp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:layout_marginBottom="14dp" />
+
+            <!-- Password -->
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Password" android:textColor="#A5D6A7" android:textSize="12sp"
+                android:layout_marginBottom="4dp" android:textStyle="bold" />
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:hint="Masukkan password"
+                android:inputType="textPassword"
+                android:background="@drawable/input_bg"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#666666"
+                android:textSize="14sp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:layout_marginBottom="4dp" />
+
+            <!-- Lupa Password Link -->
+            <TextView
+                android:id="@+id/tvForgotPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lupa password?"
+                android:textColor="#A5D6A7"
+                android:textSize="13sp"
+                android:layout_gravity="end"
+                android:layout_marginBottom="12dp"
+                android:textStyle="bold"
+                android:clickable="true"
+                android:focusable="true"/>
+
+            <!-- Progress -->
+            <ProgressBar
+                android:id="@+id/progressLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Tombol Login -->
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:text="🔐 Masuk"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#2E7D32"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="─────── atau ───────"
+                android:textColor="#444"
+                android:gravity="center"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Mode Tamu -->
+            <Button
+                android:id="@+id/tvGuest"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="👀 Masuk sebagai Tamu"
+                android:textSize="13sp"
+                android:textColor="#A5D6A7"
+                android:backgroundTint="#1A2E1C"
+                android:layout_marginBottom="20dp" />
+
+            <!-- Daftar -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Belum punya akun? "
+                    android:textColor="#888" android:textSize="13sp" />
+                <TextView
+                    android:id="@+id/tvDaftar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Daftar Sekarang"
+                    android:textColor="#43A047"
+                    android:textStyle="bold"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

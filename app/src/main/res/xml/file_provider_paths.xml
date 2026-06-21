@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <!-- Akses ke folder Downloads publik -->
+    <external-path name="downloads" path="Download/" />
+    <!-- Akses ke folder cache internal (backup) -->
+    <cache-path name="cache" path="." />
+    <!-- Akses ke folder files internal -->
+    <files-path name="files" path="." />
+</paths>

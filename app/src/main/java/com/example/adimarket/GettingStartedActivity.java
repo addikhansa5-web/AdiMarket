@@ -167,51 +167,60 @@ public class GettingStartedActivity extends AppCompatActivity {
     }
 
     private void getAddressFromLocation(double latitude, double longitude) {
-        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        if (!Geocoder.isPresent()) {
+            tvLocation.setText(getString(R.string.location_detected) + " (" + String.format("%.4f, %.4f", latitude, longitude) + ")");
+            progressBar.setVisibility(View.GONE);
+            enableButton();
+            return;
+        }
 
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         try {
             List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
 
             if (addresses != null && !addresses.isEmpty()) {
                 Address address = addresses.get(0);
 
-                // Ambil data lokasi
-                kecamatan = address.getSubLocality();
-                String kota = address.getLocality();
-                String kabupaten = address.getSubAdminArea(); // Ini untuk Kabupaten/Regency
-                String provinsi = address.getAdminArea();
+                // Ambil data lokasi dengan urutan prioritas
+                String subLocality = address.getSubLocality(); // Kecamatan
+                String locality = address.getLocality(); // Kota
+                String subAdmin = address.getSubAdminArea(); // Kabupaten
+                String admin = address.getAdminArea(); // Provinsi
 
-                // Tampilkan lokasi
-                String lokasi = "";
-                if (kecamatan != null && !kecamatan.isEmpty()) {
-                    lokasi = getString(R.string.district_prefix) + kecamatan;
-                    if (kabupaten != null) {
-                        lokasi += ", " + kabupaten;
-                    } else if (kota != null) {
-                        lokasi += ", " + kota;
-                    }
-                } else if (kabupaten != null) {
-                    lokasi = kabupaten;
-                } else if (kota != null) {
-                    lokasi = kota;
-                } else {
-                    lokasi = getString(R.string.location_detected);
+                StringBuilder sb = new StringBuilder();
+                
+                if (subLocality != null) {
+                    kecamatan = subLocality;
+                    sb.append(getString(R.string.district_prefix)).append(subLocality);
+                }
+                
+                if (locality != null) {
+                    if (sb.length() > 0) sb.append(", ");
+                    sb.append(locality);
+                } else if (subAdmin != null) {
+                    if (sb.length() > 0) sb.append(", ");
+                    sb.append(subAdmin);
+                }
+                
+                if (admin != null) {
+                    if (sb.length() > 0) sb.append(", ");
+                    sb.append(admin);
                 }
 
-                tvLocation.setText(lokasi);
-                
-                progressBar.setVisibility(View.GONE);
-                enableButton();
+                String lokasiFinal = sb.toString();
+                if (lokasiFinal.isEmpty()) {
+                    lokasiFinal = getString(R.string.location_detected);
+                }
 
+                tvLocation.setText(lokasiFinal);
+                
             } else {
                 tvLocation.setText(getString(R.string.address_not_found));
-                progressBar.setVisibility(View.GONE);
-                enableButton();
             }
-
         } catch (IOException e) {
             e.printStackTrace();
             tvLocation.setText(getString(R.string.address_error));
+        } finally {
             progressBar.setVisibility(View.GONE);
             enableButton();
         }
